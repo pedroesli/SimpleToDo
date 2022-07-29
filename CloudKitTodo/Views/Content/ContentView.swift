@@ -37,27 +37,11 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
+                ListCell(iconName: "square", title: "square", taskCountText: "12")
 //                ForEach(viewModel.lists) { list in
 //                    Text(list.title ?? "No Title")
 //                }
 //                .onDelete(perform: viewModel.deleteItems)
-                HStack(spacing: 0) {
-                    Image(systemName: "square")
-                        .font(.body.bold())
-                    Text("All")
-                        .font(.system(.title3, design: .rounded))
-                        .foregroundColor(.projectColors.textColors.textColor)
-                        .padding(.leading, 16)
-                    Spacer()
-                    Text("12")
-                        .foregroundColor(.projectColors.textColors.taskCountColor)
-                        .background {
-                            RoundedRectangle(cornerRadius: 9, style: .continuous)
-                                .padding(EdgeInsets(top: -5, leading: -7, bottom: -5, trailing: -7))
-                                .foregroundColor(Color("CountBackgroundColor"))
-                        }
-                }
-                .listRowBackground(Color.clear)
             }
             .navigationTitle("Lists")
             .toolbar {

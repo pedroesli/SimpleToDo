@@ -13,6 +13,7 @@
 		37D7AC9D289362E5008FD958 /* CDTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7AC99289362E5008FD958 /* CDTask+CoreDataProperties.swift */; };
 		37D7AC9E289362E5008FD958 /* CDList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7AC9A289362E5008FD958 /* CDList+CoreDataClass.swift */; };
 		37D7AC9F289362E5008FD958 /* CDList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7AC9B289362E5008FD958 /* CDList+CoreDataProperties.swift */; };
+		37D7ACA228937A21008FD958 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7ACA128937A21008FD958 /* ListCell.swift */; };
 		37FB7BA62890C99B00915411 /* CloudKitTodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FB7BA52890C99B00915411 /* CloudKitTodoApp.swift */; };
 		37FB7BA82890C99B00915411 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FB7BA72890C99B00915411 /* ContentView.swift */; };
 		37FB7BAA2890C99E00915411 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37FB7BA92890C99E00915411 /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		37D7AC99289362E5008FD958 /* CDTask+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		37D7AC9A289362E5008FD958 /* CDList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		37D7AC9B289362E5008FD958 /* CDList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		37D7ACA128937A21008FD958 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		37FB7BA22890C99B00915411 /* CloudKitTodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudKitTodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37FB7BA52890C99B00915411 /* CloudKitTodoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitTodoApp.swift; sourceTree = "<group>"; };
 		37FB7BA72890C99B00915411 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				37FB7BA72890C99B00915411 /* ContentView.swift */,
+				37D7ACA128937A21008FD958 /* ListCell.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 				37D7AC832892FF06008FD958 /* Color+ProjectColors.swift in Sources */,
 				37D7AC9F289362E5008FD958 /* CDList+CoreDataProperties.swift in Sources */,
 				37D7AC9E289362E5008FD958 /* CDList+CoreDataClass.swift in Sources */,
+				37D7ACA228937A21008FD958 /* ListCell.swift in Sources */,
 				37FB7BA62890C99B00915411 /* CloudKitTodoApp.swift in Sources */,
 				37D7AC8628932FCA008FD958 /* Icons.swift in Sources */,
 				37D7AC9C289362E5008FD958 /* CDTask+CoreDataClass.swift in Sources */,
