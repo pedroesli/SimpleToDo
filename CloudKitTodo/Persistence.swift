@@ -27,8 +27,10 @@ struct PersistenceController {
                 newTask.id = UUID()
                 newTask.text = "Task #\(i)"
                 newTask.order = Int64(i)
+                newTask.isCompleted = false
                 
                 newList.addToTasks(newTask)
+                newList.uncompletedTaskCount += Int64(1)
             }
         }
         result.save()
@@ -42,7 +44,7 @@ struct PersistenceController {
         }
     }
 
-    init(inMemory: Bool = false) {
+    private init(inMemory: Bool = false) {
         container = NSPersistentCloudKitContainer(name: "CloudKitTodo")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
@@ -78,6 +80,20 @@ struct PersistenceController {
                 // MARK: Remove for shipping
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
+        }
+    }
+    
+    func fetchLists() -> [CDList] {
+        let fetchRequest = CDList.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(keyPath: \CDList.order, ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        do {
+            return try viewContext.fetch(fetchRequest)
+        }
+        catch {
+            print("Fetch List Error: \(error)")
+            return []
         }
     }
 }

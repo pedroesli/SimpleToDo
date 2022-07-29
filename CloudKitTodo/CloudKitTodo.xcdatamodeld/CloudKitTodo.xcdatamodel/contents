@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G72" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="CDList" representedClassName="CDList" syncable="YES">
         <attribute name="iconColorName" optional="YES" attributeType="String"/>
         <attribute name="iconName" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="order" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="uncompletedTaskCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDTask" inverseName="list" inverseEntity="CDTask"/>
     </entity>
     <entity name="CDTask" representedClassName="CDTask" syncable="YES">
@@ -16,7 +17,7 @@
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDList" inverseName="tasks" inverseEntity="CDList"/>
     </entity>
     <elements>
-        <element name="CDList" positionX="515.5325927734375" positionY="925.7290954589844" width="128" height="119"/>
+        <element name="CDList" positionX="515.5325927734375" positionY="925.7290954589844" width="128" height="134"/>
         <element name="CDTask" positionX="799.977783203125" positionY="1049.531127929688" width="142.54833984375" height="104"/>
     </elements>
 </model>

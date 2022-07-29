@@ -2,7 +2,7 @@
 //  CDList+CoreDataProperties.swift
 //  CloudKitTodo
 //
-//  Created by Pedro Ésli Vieira do Nascimento on 28/07/22.
+//  Created by Pedro Ésli Vieira do Nascimento on 29/07/22.
 //
 //
 
@@ -19,8 +19,9 @@ extension CDList {
     @NSManaged public var iconColorName: String?
     @NSManaged public var iconName: String?
     @NSManaged public var id: UUID?
-    @NSManaged public var title: String?
     @NSManaged public var order: Int64
+    @NSManaged public var title: String?
+    @NSManaged public var uncompletedTaskCount: Int64
     @NSManaged public var tasks: NSSet?
 
 }

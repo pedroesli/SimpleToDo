@@ -1,27 +1,27 @@
 //
-//  ListCell.swift
+//  AllCell.swift
 //  CloudKitTodo
 //
-//  Created by Pedro Ésli Vieira do Nascimento on 28/07/22.
+//  Created by Pedro Ésli Vieira do Nascimento on 29/07/22.
 //
 
 import SwiftUI
 
-struct ListCell: View {
+struct AllCell: View {
     
-    let list: CDList
+    @Binding var uncompletedTaskCount: Int
     
     var body: some View {
         HStack(spacing: 0) {
-            Image(systemName: list.iconName ?? "")
+            Image(systemName: "square.fill")
                 .font(.body.bold())
-                .foregroundColor(Color(list.iconColorName ?? ""))
-            Text(list.title ?? "")
+                .foregroundColor(Color("ListColorAll"))
+            Text("All")
                 .font(.system(.title3, design: .rounded))
                 .foregroundColor(.projectColors.textColors.textColor)
                 .padding(.leading, 16)
             Spacer()
-            Text(String(list.uncompletedTaskCount))
+            Text(String(uncompletedTaskCount))
                 .foregroundColor(.projectColors.textColors.taskCountColor)
                 .background {
                     RoundedRectangle(cornerRadius: 9, style: .continuous)
@@ -31,16 +31,13 @@ struct ListCell: View {
         }
         .padding(.bottom, 30)
         .listRowBackground(Color.clear)
-        .onReceive(list.publisher(for: \.title)) { output in
-            print("PUBLISHED: \(output)")
-        }
     }
 }
 
-struct ListCell_Previews: PreviewProvider {
+struct AllCell_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            ListCell(list: PersistenceController.preview.fetchLists().first!)
+            AllCell(uncompletedTaskCount: .constant(13))
         }
     }
 }
