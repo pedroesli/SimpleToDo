@@ -70,14 +70,19 @@ class ContentViewModel: ObservableObject {
     }
     
     private func countTotalUncompletedTaskCount() {
-        var count = 0
-        for list in self.lists {
-            count += Int(list.uncompletedTaskCount)
+        DispatchQueue.global(qos: .background).async {
+            var count = 0
+            for list in self.lists {
+                count += Int(list.uncompletedTaskCount)
+            }
+            DispatchQueue.main.async {
+                self.totalUncompletedTaskCount = count
+            }
         }
-        self.totalUncompletedTaskCount = count
     }
     
-    func contextDidSave(notification: Notification) {
+    private func contextDidSave(notification: Notification) {
+        // Only refresh list and totalUncompletedTaskCount when there was a update on a CDList property
         if let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject>,
            !updatedObjects.isEmpty {
             let lists = updatedObjects.compactMap { $0 as? CDList }
