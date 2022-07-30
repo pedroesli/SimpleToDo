@@ -31,9 +31,7 @@ struct ListCell: View {
         }
         .padding(.bottom, 30)
         .listRowBackground(Color.clear)
-        .onReceive(list.publisher(for: \.title)) { output in
-            print("PUBLISHED: \(output)")
-        }
+        .listRowSeparator(.hidden)
     }
 }
 

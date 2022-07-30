@@ -11,5 +11,13 @@ import CoreData
 
 @objc(CDList)
 public class CDList: NSManagedObject {
-
+    convenience init(context: NSManagedObjectContext, title: String, order: Int, iconName: String, iconColorName: String) {
+        self.init(context: context)
+        id = UUID()
+        uncompletedTaskCount = 0
+        self.title = title
+        self.order = Int64(order)
+        self.iconName = iconName
+        self.iconColorName = iconColorName
+    }
 }

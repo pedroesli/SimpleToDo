@@ -11,5 +11,11 @@ import CoreData
 
 @objc(CDTask)
 public class CDTask: NSManagedObject {
-
+    convenience init(context: NSManagedObjectContext, text: String, order: Int) {
+        self.init(context: context)
+        id = UUID()
+        isCompleted = false
+        self.text = text
+        self.order = Int64(order)
+    }
 }

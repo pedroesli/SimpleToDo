@@ -7,7 +7,6 @@
 
 import SwiftUI
 import CoreData
-import Combine
 
 class ContentViewModel: ObservableObject {
     
@@ -15,24 +14,19 @@ class ContentViewModel: ObservableObject {
     @Published var totalUncompletedTaskCount = 0
     
     private var persistenceController = PersistenceController.shared
-    private var cancellables =  Set<AnyCancellable>()
+    private var notification: NSObjectProtocol?
     
     deinit {
-        cancellables.forEach{ $0.cancel() }
+        if let notification = notification {
+            NotificationCenter.default.removeObserver(notification)
+        }
     }
     
     func onViewAppear() {
         lists = persistenceController.fetchLists()
         countTotalUncompletedTaskCount()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            let list = self.lists.first!
-            list.id = UUID()
-            list.title = "New Title 16"
-            self.persistenceController.save()
-            
-            self.lists = self.persistenceController.fetchLists()
-        }
+        
+        notification = NotificationCenter.default.addObserver(forName: .NSManagedObjectContextDidSave, object: nil, queue: .main, using: contextDidSave(notification:))
     }
     
     func addItem() {
@@ -83,9 +77,15 @@ class ContentViewModel: ObservableObject {
         self.totalUncompletedTaskCount = count
     }
     
-    func listItemChanged(list: CDList) {
-        print("Changeddd: \(list)")
-        //lists[index].title = list.title
+    func contextDidSave(notification: Notification) {
+        if let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject>,
+           !updatedObjects.isEmpty {
+            let lists = updatedObjects.compactMap { $0 as? CDList }
+            if !lists.isEmpty {
+                self.objectWillChange.send()
+                countTotalUncompletedTaskCount()
+            }
+        }
     }
     
 }
@@ -98,10 +98,11 @@ struct ContentView: View {
         NavigationView {
             List {
                 AllCell(uncompletedTaskCount: $viewModel.totalUncompletedTaskCount)
-                ForEach(viewModel.lists, id: \.id) { list in
+                ForEach(viewModel.lists) { list in
                     ListCell(list: list)
                 }
                 .onDelete(perform: viewModel.deleteItems)
+                .id(UUID())
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
