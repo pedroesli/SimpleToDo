@@ -12,6 +12,7 @@
 		371D35B628942DB000A19B0F /* CDList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D35B228942DB000A19B0F /* CDList+CoreDataClass.swift */; };
 		371D35B728942DB000A19B0F /* CDList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D35B328942DB000A19B0F /* CDList+CoreDataProperties.swift */; };
 		371D35B92894312C00A19B0F /* AllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D35B82894312C00A19B0F /* AllCell.swift */; };
+		375A00392894B594001B53D0 /* NewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A00382894B594001B53D0 /* NewListView.swift */; };
 		37D7AC832892FF06008FD958 /* Color+ProjectColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7AC822892FF06008FD958 /* Color+ProjectColors.swift */; };
 		37D7AC8628932FCA008FD958 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7AC8528932FCA008FD958 /* Icons.swift */; };
 		37D7ACA228937A21008FD958 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7ACA128937A21008FD958 /* ListCell.swift */; };
@@ -30,6 +31,7 @@
 		371D35B228942DB000A19B0F /* CDList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		371D35B328942DB000A19B0F /* CDList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		371D35B82894312C00A19B0F /* AllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCell.swift; sourceTree = "<group>"; };
+		375A00382894B594001B53D0 /* NewListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListView.swift; sourceTree = "<group>"; };
 		37D7AC822892FF06008FD958 /* Color+ProjectColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+ProjectColors.swift"; sourceTree = "<group>"; };
 		37D7AC8528932FCA008FD958 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		37D7ACA128937A21008FD958 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
@@ -71,9 +73,18 @@
 		3725CF782892E993002CAC78 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				375A00372894B586001B53D0 /* NewList */,
 				37D7AC8F28935F7C008FD958 /* Content */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		375A00372894B586001B53D0 /* NewList */ = {
+			isa = PBXGroup;
+			children = (
+				375A00382894B594001B53D0 /* NewListView.swift */,
+			);
+			path = NewList;
 			sourceTree = "<group>";
 		};
 		37D7AC812892FEE4008FD958 /* Extensions */ = {
@@ -234,6 +245,7 @@
 				371D35B528942DB000A19B0F /* CDTask+CoreDataProperties.swift in Sources */,
 				371D35B92894312C00A19B0F /* AllCell.swift in Sources */,
 				37FB7BA62890C99B00915411 /* CloudKitTodoApp.swift in Sources */,
+				375A00392894B594001B53D0 /* NewListView.swift in Sources */,
 				37D7AC8628932FCA008FD958 /* Icons.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
