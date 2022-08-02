@@ -23,7 +23,7 @@ struct NewListView: View {
                     iconName: $iconName,
                     iconColor: $iconColor
                 )
-                ExtractedView(iconColor: $iconColor)
+                ColorSelectSection(iconColor: $iconColor)
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("New List")
@@ -76,6 +76,39 @@ struct NewListView: View {
             }
         }
     }
+    
+    private struct ColorSelectSection: View {
+        
+        @Binding var iconColor: ListIconColor
+        private let columns = [
+            GridItem(.flexible()),
+            GridItem(.flexible()),
+            GridItem(.flexible()),
+            GridItem(.flexible()),
+            GridItem(.flexible()),
+            GridItem(.flexible())
+        ]
+        
+        var body: some View {
+            Section {
+                LazyVGrid(columns: columns, alignment: .center) {
+                    ForEach(Color.projectColors.listIconColors, id: \.name) { listColor in
+                        ZStack {
+                            Button {
+                                self.iconColor = listColor
+                            } label: {
+                                RoundedRectangle(cornerRadius: 9, style: .continuous)
+                                    .foregroundColor(listColor.color)
+                                    .aspectRatio(1/1, contentMode: .fill)
+                            }
+                        }
+                    }
+                }
+                .buttonStyle(PlainButtonStyle())
+                .padding(.vertical, 15)
+            }
+        }
+    }
 }
 
 struct NewListView_Previews: PreviewProvider {
@@ -101,37 +134,3 @@ struct NewListView_Previews: PreviewProvider {
 //            }
 //        }
 //    }
-
-
-struct ExtractedView: View {
-    
-    @Binding var iconColor: ListIconColor
-    private let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
-    
-    var body: some View {
-        Section {
-            LazyVGrid(columns: columns, alignment: .center) {
-                ForEach(Color.projectColors.listIconColors, id: \.name) { listColor in
-                    ZStack {
-                        Button {
-                            self.iconColor = listColor
-                        } label: {
-                            RoundedRectangle(cornerRadius: 9, style: .continuous)
-                                .foregroundColor(listColor.color)
-                                .aspectRatio(1/1, contentMode: .fill)
-                        }
-                    }
-                }
-            }
-            .buttonStyle(PlainButtonStyle())
-            .padding(.vertical, 15)
-        }
-    }
-}
