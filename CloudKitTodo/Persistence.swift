@@ -20,7 +20,7 @@ struct PersistenceController {
             newList.title = "List #\(i)"
             newList.order = Int64(i)
             newList.iconName = Icons().iconNames.randomElement()!
-            newList.iconColorName = Color.projectColors.listColors.colorNames.randomElement()!
+            newList.iconColorName = Color.projectColors.listIconColors.randomElement()!.name
             
             for i in 0..<2 {
                 let newTask = CDTask(context: viewContext)

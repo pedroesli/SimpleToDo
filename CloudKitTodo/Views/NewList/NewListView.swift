@@ -10,12 +10,20 @@ import SwiftUI
 struct NewListView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @State private var text = ""
+    @State private var title = ""
+    @State private var iconName = "square"
+    @State private var iconColor: ListIconColor = Color.projectColors.listIconColors[4]
+    
     
     var body: some View {
         NavigationView {
             List {
-                TextField("", text: $text,prompt: Text("List Title"))
+                TitleAndIconSection(
+                    title: $title,
+                    iconName: $iconName,
+                    iconColor: $iconColor
+                )
+                ExtractedView(iconColor: $iconColor)
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("New List")
@@ -32,21 +40,52 @@ struct NewListView: View {
                         Text("OK")
                             .font(.body.bold())
                     }
-                    .disabled(text.isEmpty)
+                    .disabled(title.isEmpty)
                 }
             }
         }
         
+    }
+    
+    private struct TitleAndIconSection: View {
+        
+        @Binding var title: String
+        @Binding var iconName: String
+        @Binding var iconColor: ListIconColor
+        
+        var body: some View {
+            Section {
+                VStack(spacing: 15) {
+                    Image(systemName: iconName)
+                        .resizable()
+                        .aspectRatio(1/1, contentMode: .fit)
+                        .font(.body.bold())
+                        .frame(width: 75)
+                        .foregroundColor(iconColor.color)
+                    //MARK: Replace with UIKit textfield in a future update
+                    TextField("", text: $title,prompt: Text("List Title"))
+                        .foregroundColor(iconColor.color)
+                        .font(.system(.title2, design: .rounded).bold())
+                        .padding()
+                        .background {
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .foregroundColor(Color(uiColor: .systemGray6))
+                        }
+                }
+                .padding(.vertical, 15)
+            }
+        }
     }
 }
 
 struct NewListView_Previews: PreviewProvider {
     static var previews: some View {
         NewListView()
+            
     }
 }
 
-
+// For toolbar options
 //    .toolbar {
 //        ToolbarItem(placement: .navigationBarLeading) {
 //            Text("New List")
@@ -62,3 +101,37 @@ struct NewListView_Previews: PreviewProvider {
 //            }
 //        }
 //    }
+
+
+struct ExtractedView: View {
+    
+    @Binding var iconColor: ListIconColor
+    private let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
+    var body: some View {
+        Section {
+            LazyVGrid(columns: columns, alignment: .center) {
+                ForEach(Color.projectColors.listIconColors, id: \.name) { listColor in
+                    ZStack {
+                        Button {
+                            self.iconColor = listColor
+                        } label: {
+                            RoundedRectangle(cornerRadius: 9, style: .continuous)
+                                .foregroundColor(listColor.color)
+                                .aspectRatio(1/1, contentMode: .fill)
+                        }
+                    }
+                }
+            }
+            .buttonStyle(PlainButtonStyle())
+            .padding(.vertical, 15)
+        }
+    }
+}

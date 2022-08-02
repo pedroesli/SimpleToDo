@@ -15,7 +15,7 @@ struct AllCell: View {
         HStack(spacing: 0) {
             Image(systemName: "square.fill")
                 .font(.body.bold())
-                .foregroundColor(Color("ListColorAll"))
+                .foregroundColor(Color("ListIconColorAll"))
             Text("All")
                 .font(.system(.title3, design: .rounded))
                 .foregroundColor(.projectColors.textColors.textColor)

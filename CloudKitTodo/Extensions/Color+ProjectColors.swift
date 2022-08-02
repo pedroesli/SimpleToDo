@@ -9,29 +9,31 @@ import SwiftUI
 
 
 struct ProjectColors {
-    let listColors = ListColors()
+    let listIconColors = ListIconColor.colors
     let textColors = TextColors()
 }
 
-struct ListColors {
-    let colorNames = [
-        "ListColor1",
-        "ListColor2",
-        "ListColor3",
-        "ListColor4",
-        "ListColor5",
-        "ListColor6",
-        "ListColor7",
-        "ListColor8",
-        "ListColor9",
-        "ListColor10",
-        "ListColor11",
-        "ListColor12",
-    ]
-    var colors: [Color] {
-        get {
-            return colorNames.map{ Color($0) }
-        }
+struct ListIconColor {
+    let name: String
+    var color: Color {
+        return Color(name)
+    }
+    
+    static var colors: [ListIconColor] {
+        return [
+            ListIconColor(name: "ListIconColor1"),
+            ListIconColor(name: "ListIconColor2"),
+            ListIconColor(name: "ListIconColor3"),
+            ListIconColor(name: "ListIconColor4"),
+            ListIconColor(name: "ListIconColor5"),
+            ListIconColor(name: "ListIconColor6"),
+            ListIconColor(name: "ListIconColor7"),
+            ListIconColor(name: "ListIconColor8"),
+            ListIconColor(name: "ListIconColor9"),
+            ListIconColor(name: "ListIconColor10"),
+            ListIconColor(name: "ListIconColor11"),
+            ListIconColor(name: "ListIconColor12"),
+        ]
     }
 }
 

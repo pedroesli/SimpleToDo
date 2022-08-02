@@ -36,7 +36,7 @@ class ContentViewModel: ObservableObject {
             newList.title = "List #\(lists.count)"
             newList.order = Int64(lists.count)
             newList.iconName = Icons().iconNames.randomElement()!
-            newList.iconColorName = Color.projectColors.listColors.colorNames.randomElement()!
+            newList.iconColorName = Color.projectColors.listIconColors.randomElement()!.name
             newList.uncompletedTaskCount = 0
             
             for i in 0..<2 {
@@ -98,6 +98,7 @@ class ContentViewModel: ObservableObject {
 struct ContentView: View {
     
     @StateObject private var viewModel = ContentViewModel()
+    @State private var presentNewListSheet = false
 
     var body: some View {
         NavigationView {
@@ -112,7 +113,9 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: viewModel.addItem) {
+                    Button {
+                        presentNewListSheet = true
+                    } label: {
                         HStack {
                             Image(systemName: "plus.circle.fill")
                             Text("New List")
@@ -120,7 +123,11 @@ struct ContentView: View {
                         .font(.system(.body, design: .rounded).bold())
                         .foregroundColor(.accentColor)
                     }
+
                 }
+            }
+            .sheet(isPresented: $presentNewListSheet) {
+                NewListView()
             }
         }
         .onAppear(perform: viewModel.onViewAppear)
