@@ -8,27 +8,32 @@
 import Foundation
 
 struct Icons {
-    let iconNames = [
-        "square",
-        "square.fill",
-        "bookmark.square",
-        "play.square",
-        "mic.square",
-        "dot.square",
-        "circle.square",
-        "heart.square",
-        "star.square",
-        "flag.square",
-        "location.square",
-        "bell.square",
-        "tag.square",
-        "bolt.square",
-        "eye.square",
-        "lock.square",
-        "pin.square",
-        "mappin.square",
-        "timer.square",
-        "questionmark.square",
-        "exclamationmark.square"
-    ]
+    static var iconNames: [String] {
+        return [
+            "circle",
+            "circle.fill",
+            "square",
+            "square.fill",
+            "triangle",
+            "triangle.fill",
+            "diamond",
+            "diamond.fill",
+            "pentagon",
+            "pentagon.fill",
+            "seal",
+            "seal.fill",
+            "tag.square",
+            "bolt.square",
+            "eye.square",
+            "lock.square",
+            "pin.square",
+            "mappin.square",
+            "timer.square",
+            "questionmark.square",
+            "exclamationmark.square",
+            "curlybraces.square",
+            "number.square",
+            "xmark.square"
+        ]
+    }
 }

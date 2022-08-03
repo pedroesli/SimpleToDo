@@ -13,8 +13,16 @@ struct NewListView: View {
     @State private var title = ""
     @State private var iconName = "square"
     @State private var iconColor: ListIconColor = Color.projectColors.listIconColors[4]
-    @State private var emoji = ""
     @State private var showEmojiPicker = false
+    
+    private let columns = [
+        GridItem(.flexible(), spacing: 17),
+        GridItem(.flexible(), spacing: 17),
+        GridItem(.flexible(), spacing: 17),
+        GridItem(.flexible(), spacing: 17),
+        GridItem(.flexible(), spacing: 17),
+        GridItem(.flexible(), spacing: 17)
+    ]
     
     var body: some View {
         NavigationView {
@@ -26,21 +34,57 @@ struct NewListView: View {
                 )
                 ColorSelectSection(iconColor: $iconColor)
                 Section {
-                    VStack {
-                        Button {
-                            showEmojiPicker = true
-                        } label: {
-                            Text("Press")
-                        }
-
-                        EmojiPicker(emoji: $emoji, apear: $showEmojiPicker)
-                            .background(.red)
+//                    ZStack {
+//                        EmojiPicker(emoji: $iconName, showKeyboard: $showEmojiPicker)
 //                            .frame(width: 0, height: 0)
+//                        Button {
+//                            showEmojiPicker = true
+//                        } label: {
+//                            Image(systemName: "face.smiling")
+//                                .resizable()
+//                                .aspectRatio(1/1, contentMode: .fit)
+//                                .frame(width: 30)
+//                                .font(.body.bold())
+//                                .foregroundColor(.blue)
+//                                .padding(7)
+//                                .background {
+//                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+//                                        .foregroundColor(Color(.systemGray6))
+//                                }
+//                        }
+//                    }
+//                    .buttonStyle(PlainButtonStyle())
+                    LazyVGrid(columns: columns, alignment: .center, spacing: 17) {
+                        ForEach(Icons.iconNames, id: \.self) { iconName in
+                            Button {
+                                self.iconName = iconName
+                            } label: {
+                                ZStack {
+                                    Circle()
+                                        .foregroundColor(Color(uiColor: .systemGray6))
+                                        .aspectRatio(1/1, contentMode: .fit)
+                                        .overlay {
+                                            if self.iconName == iconName {
+                                                Circle()
+                                                    .stroke(Color(uiColor: .systemGray2), lineWidth: 3)
+                                                    .padding(-5)
+                                            }
+                                        }
+                                    Image(systemName: iconName)
+                                        .font(.system(.title2, design: .rounded))
+                                        .foregroundColor(Color(uiColor: .darkGray))
+                                        .padding(8)
+                                }
+                            }
+                        }
                     }
                     .buttonStyle(PlainButtonStyle())
+                    .padding(.vertical, 17)
                 }
                 //TODO: Create the icon selection view
             }
+            .listRowSeparator(.hidden)
+            .listSectionSeparator(.hidden)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("New List")
             .toolbar {
@@ -97,31 +141,38 @@ struct NewListView: View {
         
         @Binding var iconColor: ListIconColor
         private let columns = [
-            GridItem(.flexible()),
-            GridItem(.flexible()),
-            GridItem(.flexible()),
-            GridItem(.flexible()),
-            GridItem(.flexible()),
-            GridItem(.flexible())
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17)
         ]
         
         var body: some View {
             Section {
-                LazyVGrid(columns: columns, alignment: .center) {
+                LazyVGrid(columns: columns, alignment: .center, spacing: 17) {
                     ForEach(Color.projectColors.listIconColors, id: \.name) { listColor in
                         ZStack {
                             Button {
                                 self.iconColor = listColor
                             } label: {
-                                RoundedRectangle(cornerRadius: 9, style: .continuous)
+                                Circle()
                                     .foregroundColor(listColor.color)
                                     .aspectRatio(1/1, contentMode: .fill)
+                                    .overlay {
+                                        if self.iconColor.name == listColor.name {
+                                            Circle()
+                                                .stroke(Color(uiColor: .systemGray2), lineWidth: 3)
+                                                .padding(-5)
+                                        }
+                                    }
                             }
                         }
                     }
                 }
                 .buttonStyle(PlainButtonStyle())
-                .padding(.vertical, 15)
+                .padding(.vertical, 17)
             }
         }
     }
@@ -131,81 +182,9 @@ struct NewListView_Previews: PreviewProvider {
     static var previews: some View {
         NewListView()
             
-    }
-}
-
-class UIEmojiTextField: UITextField {
-    
-    override var textInputContextIdentifier: String? {
-           return ""
-    }
-    
-    override var textInputMode: UITextInputMode? {
-        for mode in UITextInputMode.activeInputModes {
-            if mode.primaryLanguage == "emoji" {
-                self.keyboardType = .default // do not remove this
-                return mode
-            }
-        }
-        return nil
-    }
-}
-
-struct EmojiPicker: UIViewRepresentable {
-    @Binding var emoji: String
-    @Binding var apear: Bool
-    
-    func makeUIView(context: Context) -> UIEmojiTextField {
-        let emojiTextField = UIEmojiTextField()
-        emojiTextField.isHidden = true
-        emojiTextField.delegate = context.coordinator
-        context.coordinator.textfield = emojiTextField
-        return emojiTextField
-    }
-    
-    func updateUIView(_ uiView: UIEmojiTextField, context: Context) {
-        if apear {
-            uiView.becomeFirstResponder()
-        }
-        apear = false
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(parent: self)
-    }
-    
-    class Coordinator: NSObject, UITextFieldDelegate {
-        var parent: EmojiPicker
-        var textfield: UIEmojiTextField?
-        
-        init(parent: EmojiPicker) {
-            self.parent = parent
-            super.init()
             
-            NotificationCenter.default.addObserver(self, selector: #selector(keyBoardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
-        }
-        
-        deinit {
-            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
-        }
-        
-        func textFieldDidChangeSelection(_ textField: UITextField) {
-            DispatchQueue.main.async { [weak self] in
-                self?.parent.emoji = textField.text ?? ""
-                textField.resignFirstResponder()
-                self?.parent.apear = false
-            }
-        }
-        
-        @objc func keyBoardDidHide(notification: Notification) {
-            DispatchQueue.main.async { [weak self] in
-                self?.textfield?.resignFirstResponder()
-                self?.parent.apear = false
-            }
-        }
     }
 }
-
 
 // For toolbar options
 //    .toolbar {

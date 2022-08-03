@@ -35,7 +35,7 @@ class ContentViewModel: ObservableObject {
             newList.id = UUID()
             newList.title = "List #\(lists.count)"
             newList.order = Int64(lists.count)
-            newList.iconName = Icons().iconNames.randomElement()!
+            newList.iconName = Icons.iconNames.randomElement()!
             newList.iconColorName = Color.projectColors.listIconColors.randomElement()!.name
             newList.uncompletedTaskCount = 0
             
