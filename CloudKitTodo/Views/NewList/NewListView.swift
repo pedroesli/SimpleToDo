@@ -24,6 +24,7 @@ struct NewListView: View {
                     iconColor: $iconColor
                 )
                 ColorSelectSection(iconColor: $iconColor)
+                //TODO: Create the icon selection view
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("New List")
