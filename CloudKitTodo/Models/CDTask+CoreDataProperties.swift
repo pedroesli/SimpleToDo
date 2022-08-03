@@ -2,7 +2,7 @@
 //  CDTask+CoreDataProperties.swift
 //  CloudKitTodo
 //
-//  Created by Pedro Ésli Vieira do Nascimento on 29/07/22.
+//  Created by Pedro Ésli Vieira do Nascimento on 03/08/22.
 //
 //
 

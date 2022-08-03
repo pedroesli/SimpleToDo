@@ -19,8 +19,13 @@ struct PersistenceController {
             newList.id = UUID()
             newList.title = "List #\(i)"
             newList.order = Int64(i)
-            newList.iconName = Icons.iconNames.randomElement()!
-            newList.iconColorName = Color.projectColors.listIconColors.randomElement()!.name
+            
+            let newIcon = CDIcon(context: viewContext)
+            newIcon.name = Icons.iconNames.randomElement()!
+            newIcon.colorName = Color.projectColors.listIconColors.randomElement()!.name
+            newIcon.isEmoji = false
+            
+            newList.icon = newIcon
             
             for i in 0..<2 {
                 let newTask = CDTask(context: viewContext)

@@ -13,9 +13,9 @@ struct ListCell: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            Image(systemName: list.iconName ?? "")
+            Image(systemName: list.icon?.name ?? "")
                 .font(.body.bold())
-                .foregroundColor(Color(list.iconColorName ?? ""))
+                .foregroundColor(Color(list.icon?.colorName ?? ""))
             Text(list.title ?? "")
                 .font(.system(.title3, design: .rounded))
                 .foregroundColor(.projectColors.textColors.textColor)

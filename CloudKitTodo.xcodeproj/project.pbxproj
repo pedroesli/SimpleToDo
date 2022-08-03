@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		371D35B428942DB000A19B0F /* CDTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D35B028942DB000A19B0F /* CDTask+CoreDataClass.swift */; };
-		371D35B528942DB000A19B0F /* CDTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D35B128942DB000A19B0F /* CDTask+CoreDataProperties.swift */; };
-		371D35B628942DB000A19B0F /* CDList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D35B228942DB000A19B0F /* CDList+CoreDataClass.swift */; };
-		371D35B728942DB000A19B0F /* CDList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D35B328942DB000A19B0F /* CDList+CoreDataProperties.swift */; };
 		371D35B92894312C00A19B0F /* AllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D35B82894312C00A19B0F /* AllCell.swift */; };
 		3726461C289AC1DA0043613D /* EmojiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3726461B289AC1DA0043613D /* EmojiPicker.swift */; };
 		375A00392894B594001B53D0 /* NewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A00382894B594001B53D0 /* NewListView.swift */; };
+		37A12E05289AE316002A8224 /* CDIcon+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A12DFF289AE316002A8224 /* CDIcon+CoreDataClass.swift */; };
+		37A12E06289AE316002A8224 /* CDIcon+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A12E00289AE316002A8224 /* CDIcon+CoreDataProperties.swift */; };
+		37A12E07289AE316002A8224 /* CDTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A12E01289AE316002A8224 /* CDTask+CoreDataClass.swift */; };
+		37A12E08289AE316002A8224 /* CDTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A12E02289AE316002A8224 /* CDTask+CoreDataProperties.swift */; };
+		37A12E09289AE316002A8224 /* CDList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A12E03289AE316002A8224 /* CDList+CoreDataClass.swift */; };
+		37A12E0A289AE316002A8224 /* CDList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A12E04289AE316002A8224 /* CDList+CoreDataProperties.swift */; };
 		37D7AC832892FF06008FD958 /* Color+ProjectColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7AC822892FF06008FD958 /* Color+ProjectColors.swift */; };
 		37D7AC8628932FCA008FD958 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7AC8528932FCA008FD958 /* Icons.swift */; };
 		37D7ACA228937A21008FD958 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7ACA128937A21008FD958 /* ListCell.swift */; };
@@ -27,13 +29,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		371D35B028942DB000A19B0F /* CDTask+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTask+CoreDataClass.swift"; sourceTree = "<group>"; };
-		371D35B128942DB000A19B0F /* CDTask+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		371D35B228942DB000A19B0F /* CDList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		371D35B328942DB000A19B0F /* CDList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		371D35B82894312C00A19B0F /* AllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCell.swift; sourceTree = "<group>"; };
 		3726461B289AC1DA0043613D /* EmojiPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPicker.swift; sourceTree = "<group>"; };
 		375A00382894B594001B53D0 /* NewListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListView.swift; sourceTree = "<group>"; };
+		37A12DFF289AE316002A8224 /* CDIcon+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDIcon+CoreDataClass.swift"; sourceTree = "<group>"; };
+		37A12E00289AE316002A8224 /* CDIcon+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDIcon+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		37A12E01289AE316002A8224 /* CDTask+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTask+CoreDataClass.swift"; sourceTree = "<group>"; };
+		37A12E02289AE316002A8224 /* CDTask+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		37A12E03289AE316002A8224 /* CDList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		37A12E04289AE316002A8224 /* CDList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		37D7AC822892FF06008FD958 /* Color+ProjectColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+ProjectColors.swift"; sourceTree = "<group>"; };
 		37D7AC8528932FCA008FD958 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		37D7ACA128937A21008FD958 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
@@ -64,10 +68,12 @@
 		3725CF772892E98D002CAC78 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				371D35B028942DB000A19B0F /* CDTask+CoreDataClass.swift */,
-				371D35B128942DB000A19B0F /* CDTask+CoreDataProperties.swift */,
-				371D35B228942DB000A19B0F /* CDList+CoreDataClass.swift */,
-				371D35B328942DB000A19B0F /* CDList+CoreDataProperties.swift */,
+				37A12DFF289AE316002A8224 /* CDIcon+CoreDataClass.swift */,
+				37A12E00289AE316002A8224 /* CDIcon+CoreDataProperties.swift */,
+				37A12E01289AE316002A8224 /* CDTask+CoreDataClass.swift */,
+				37A12E02289AE316002A8224 /* CDTask+CoreDataProperties.swift */,
+				37A12E03289AE316002A8224 /* CDList+CoreDataClass.swift */,
+				37A12E04289AE316002A8224 /* CDList+CoreDataProperties.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -246,18 +252,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				37FB7BAF2890C99E00915411 /* Persistence.swift in Sources */,
+				37A12E08289AE316002A8224 /* CDTask+CoreDataProperties.swift in Sources */,
+				37A12E06289AE316002A8224 /* CDIcon+CoreDataProperties.swift in Sources */,
 				37FB7BA82890C99B00915411 /* ContentView.swift in Sources */,
-				371D35B628942DB000A19B0F /* CDList+CoreDataClass.swift in Sources */,
 				37FB7BC22890D21D00915411 /* CloudKitTodo.xcdatamodeld in Sources */,
-				371D35B428942DB000A19B0F /* CDTask+CoreDataClass.swift in Sources */,
 				37D7AC832892FF06008FD958 /* Color+ProjectColors.swift in Sources */,
 				3726461C289AC1DA0043613D /* EmojiPicker.swift in Sources */,
+				37A12E09289AE316002A8224 /* CDList+CoreDataClass.swift in Sources */,
+				37A12E0A289AE316002A8224 /* CDList+CoreDataProperties.swift in Sources */,
 				37D7ACA228937A21008FD958 /* ListCell.swift in Sources */,
-				371D35B728942DB000A19B0F /* CDList+CoreDataProperties.swift in Sources */,
-				371D35B528942DB000A19B0F /* CDTask+CoreDataProperties.swift in Sources */,
 				371D35B92894312C00A19B0F /* AllCell.swift in Sources */,
 				37FB7BA62890C99B00915411 /* CloudKitTodoApp.swift in Sources */,
+				37A12E07289AE316002A8224 /* CDTask+CoreDataClass.swift in Sources */,
 				375A00392894B594001B53D0 /* NewListView.swift in Sources */,
+				37A12E05289AE316002A8224 /* CDIcon+CoreDataClass.swift in Sources */,
 				37D7AC8628932FCA008FD958 /* Icons.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

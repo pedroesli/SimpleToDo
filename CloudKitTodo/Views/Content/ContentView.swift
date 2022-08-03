@@ -35,9 +35,14 @@ class ContentViewModel: ObservableObject {
             newList.id = UUID()
             newList.title = "List #\(lists.count)"
             newList.order = Int64(lists.count)
-            newList.iconName = Icons.iconNames.randomElement()!
-            newList.iconColorName = Color.projectColors.listIconColors.randomElement()!.name
             newList.uncompletedTaskCount = 0
+            
+            let newIcon = CDIcon(context: persistenceController.viewContext)
+            newIcon.name = Icons.iconNames.randomElement()!
+            newIcon.colorName = Color.projectColors.listIconColors.randomElement()!.name
+            newIcon.isEmoji = false
+            
+            newList.icon = newIcon
             
             for i in 0..<2 {
                 let newTask = CDTask(context: persistenceController.viewContext)

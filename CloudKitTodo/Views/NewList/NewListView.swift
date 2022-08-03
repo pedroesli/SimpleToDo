@@ -14,15 +14,7 @@ struct NewListView: View {
     @State private var iconName = "square"
     @State private var iconColor: ListIconColor = Color.projectColors.listIconColors[4]
     @State private var showEmojiPicker = false
-    
-    private let columns = [
-        GridItem(.flexible(), spacing: 17),
-        GridItem(.flexible(), spacing: 17),
-        GridItem(.flexible(), spacing: 17),
-        GridItem(.flexible(), spacing: 17),
-        GridItem(.flexible(), spacing: 17),
-        GridItem(.flexible(), spacing: 17)
-    ]
+    @State private var isEmoji = false
     
     var body: some View {
         NavigationView {
@@ -54,32 +46,7 @@ struct NewListView: View {
 //                        }
 //                    }
 //                    .buttonStyle(PlainButtonStyle())
-                    LazyVGrid(columns: columns, alignment: .center, spacing: 17) {
-                        ForEach(Icons.iconNames, id: \.self) { iconName in
-                            Button {
-                                self.iconName = iconName
-                            } label: {
-                                ZStack {
-                                    Circle()
-                                        .foregroundColor(Color(uiColor: .systemGray6))
-                                        .aspectRatio(1/1, contentMode: .fit)
-                                        .overlay {
-                                            if self.iconName == iconName {
-                                                Circle()
-                                                    .stroke(Color(uiColor: .systemGray2), lineWidth: 3)
-                                                    .padding(-5)
-                                            }
-                                        }
-                                    Image(systemName: iconName)
-                                        .font(.system(.title2, design: .rounded))
-                                        .foregroundColor(Color(uiColor: .darkGray))
-                                        .padding(8)
-                                }
-                            }
-                        }
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .padding(.vertical, 17)
+                    IconSelection(iconName: $iconName, isEmoji: $isEmoji)
                 }
                 //TODO: Create the icon selection view
             }
@@ -174,6 +141,52 @@ struct NewListView: View {
                 .buttonStyle(PlainButtonStyle())
                 .padding(.vertical, 17)
             }
+        }
+    }
+    
+    private struct IconSelection: View {
+        
+        @Binding var iconName: String
+        @Binding var isEmoji: Bool
+        private let columns = [
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17)
+        ]
+        
+        var body: some View {
+            LazyVGrid(columns: columns, alignment: .center, spacing: 17) {
+                ForEach(Icons.iconNames, id: \.self) { iconName in
+                    Button {
+                        self.iconName = iconName
+                        if isEmoji {
+                            isEmoji = false
+                        }
+                    } label: {
+                        ZStack {
+                            Circle()
+                                .foregroundColor(Color(uiColor: .systemGray6))
+                                .aspectRatio(1/1, contentMode: .fit)
+                                .overlay {
+                                    if self.iconName == iconName {
+                                        Circle()
+                                            .stroke(Color(uiColor: .systemGray2), lineWidth: 3)
+                                            .padding(-5)
+                                    }
+                                }
+                            Image(systemName: iconName)
+                                .font(.system(.title2, design: .rounded))
+                                .foregroundColor(Color(uiColor: .darkGray))
+                                .padding(8)
+                        }
+                    }
+                }
+            }
+            .buttonStyle(PlainButtonStyle())
+            .padding(.vertical, 17)
         }
     }
 }

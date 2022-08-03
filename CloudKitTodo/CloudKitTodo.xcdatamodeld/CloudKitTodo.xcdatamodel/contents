@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G72" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CDIcon" representedClassName="CDIcon" syncable="YES">
+        <attribute name="colorName" optional="YES" attributeType="String"/>
+        <attribute name="isEmoji" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDList" inverseName="icon" inverseEntity="CDList"/>
+    </entity>
     <entity name="CDList" representedClassName="CDList" syncable="YES">
-        <attribute name="iconColorName" optional="YES" attributeType="String"/>
-        <attribute name="iconName" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="order" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="uncompletedTaskCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="icon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDIcon" inverseName="list" inverseEntity="CDIcon"/>
         <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDTask" inverseName="list" inverseEntity="CDTask"/>
     </entity>
     <entity name="CDTask" representedClassName="CDTask" syncable="YES">
@@ -17,7 +22,8 @@
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDList" inverseName="tasks" inverseEntity="CDList"/>
     </entity>
     <elements>
-        <element name="CDList" positionX="515.5325927734375" positionY="925.7290954589844" width="128" height="134"/>
+        <element name="CDList" positionX="515.5325927734375" positionY="925.7290954589844" width="128" height="119"/>
         <element name="CDTask" positionX="799.977783203125" positionY="1049.531127929688" width="142.54833984375" height="104"/>
+        <element name="CDIcon" positionX="666" positionY="1035" width="128" height="89"/>
     </elements>
 </model>
