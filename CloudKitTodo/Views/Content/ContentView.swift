@@ -75,7 +75,7 @@ class ContentViewModel: ObservableObject {
     }
     
     private func countTotalUncompletedTaskCount() {
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             var count = 0
             for list in self.lists {
                 count += Int(list.uncompletedTaskCount)
