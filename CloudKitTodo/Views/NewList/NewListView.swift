@@ -13,7 +13,8 @@ struct NewListView: View {
     @State private var title = ""
     @State private var iconName = "square"
     @State private var iconColor: ListIconColor = Color.projectColors.listIconColors[4]
-    
+    @State private var emoji = ""
+    @State private var showEmojiPicker = false
     
     var body: some View {
         NavigationView {
@@ -24,6 +25,20 @@ struct NewListView: View {
                     iconColor: $iconColor
                 )
                 ColorSelectSection(iconColor: $iconColor)
+                Section {
+                    VStack {
+                        Button {
+                            showEmojiPicker = true
+                        } label: {
+                            Text("Press")
+                        }
+
+                        EmojiPicker(emoji: $emoji, apear: $showEmojiPicker)
+                            .background(.red)
+//                            .frame(width: 0, height: 0)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
                 //TODO: Create the icon selection view
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -118,6 +133,79 @@ struct NewListView_Previews: PreviewProvider {
             
     }
 }
+
+class UIEmojiTextField: UITextField {
+    
+    override var textInputContextIdentifier: String? {
+           return ""
+    }
+    
+    override var textInputMode: UITextInputMode? {
+        for mode in UITextInputMode.activeInputModes {
+            if mode.primaryLanguage == "emoji" {
+                self.keyboardType = .default // do not remove this
+                return mode
+            }
+        }
+        return nil
+    }
+}
+
+struct EmojiPicker: UIViewRepresentable {
+    @Binding var emoji: String
+    @Binding var apear: Bool
+    
+    func makeUIView(context: Context) -> UIEmojiTextField {
+        let emojiTextField = UIEmojiTextField()
+        emojiTextField.isHidden = true
+        emojiTextField.delegate = context.coordinator
+        context.coordinator.textfield = emojiTextField
+        return emojiTextField
+    }
+    
+    func updateUIView(_ uiView: UIEmojiTextField, context: Context) {
+        if apear {
+            uiView.becomeFirstResponder()
+        }
+        apear = false
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(parent: self)
+    }
+    
+    class Coordinator: NSObject, UITextFieldDelegate {
+        var parent: EmojiPicker
+        var textfield: UIEmojiTextField?
+        
+        init(parent: EmojiPicker) {
+            self.parent = parent
+            super.init()
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(keyBoardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
+        }
+        
+        deinit {
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
+        }
+        
+        func textFieldDidChangeSelection(_ textField: UITextField) {
+            DispatchQueue.main.async { [weak self] in
+                self?.parent.emoji = textField.text ?? ""
+                textField.resignFirstResponder()
+                self?.parent.apear = false
+            }
+        }
+        
+        @objc func keyBoardDidHide(notification: Notification) {
+            DispatchQueue.main.async { [weak self] in
+                self?.textfield?.resignFirstResponder()
+                self?.parent.apear = false
+            }
+        }
+    }
+}
+
 
 // For toolbar options
 //    .toolbar {
