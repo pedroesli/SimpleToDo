@@ -22,36 +22,21 @@ struct NewListView: View {
                 TitleAndIconSection(
                     title: $title,
                     iconName: $iconName,
-                    iconColor: $iconColor
+                    iconColor: $iconColor,
+                    isEmoji: $isEmoji
                 )
                 ColorSelectSection(iconColor: $iconColor)
                 Section {
-//                    ZStack {
-//                        EmojiPicker(emoji: $iconName, showKeyboard: $showEmojiPicker)
-//                            .frame(width: 0, height: 0)
-//                        Button {
-//                            showEmojiPicker = true
-//                        } label: {
-//                            Image(systemName: "face.smiling")
-//                                .resizable()
-//                                .aspectRatio(1/1, contentMode: .fit)
-//                                .frame(width: 30)
-//                                .font(.body.bold())
-//                                .foregroundColor(.blue)
-//                                .padding(7)
-//                                .background {
-//                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-//                                        .foregroundColor(Color(.systemGray6))
-//                                }
-//                        }
-//                    }
-//                    .buttonStyle(PlainButtonStyle())
-                    IconSelection(iconName: $iconName, isEmoji: $isEmoji)
+                    VStack {
+                        EmojiSelection(iconName: $iconName, showEmojiPicker: $showEmojiPicker, isEmoji: $isEmoji)
+                        IconSelection(iconName: $iconName, isEmoji: $isEmoji)
+                    }
                 }
+                .buttonStyle(PlainButtonStyle())
+                .listRowSeparator(.hidden)
                 //TODO: Create the icon selection view
             }
             .listRowSeparator(.hidden)
-            .listSectionSeparator(.hidden)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("New List")
             .toolbar {
@@ -79,16 +64,12 @@ struct NewListView: View {
         @Binding var title: String
         @Binding var iconName: String
         @Binding var iconColor: ListIconColor
+        @Binding var isEmoji: Bool
         
         var body: some View {
             Section {
                 VStack(spacing: 15) {
-                    Image(systemName: iconName)
-                        .resizable()
-                        .aspectRatio(1/1, contentMode: .fit)
-                        .font(.body.bold())
-                        .frame(width: 75)
-                        .foregroundColor(iconColor.color)
+                    makeIconPreview(iconName, isEmoji)
                     //MARK: Replace with UIKit textfield in a future update
                     TextField("", text: $title,prompt: Text("List Title"))
                         .foregroundColor(iconColor.color)
@@ -101,6 +82,19 @@ struct NewListView: View {
                 }
                 .padding(.vertical, 15)
             }
+        }
+        
+        @ViewBuilder func makeIconPreview(_ iconName: String,_ isEmoji: Bool) -> some View {
+            Group {
+                if isEmoji {
+                    Text(iconName)
+                }
+                else {
+                    Text("\(Image(systemName: iconName))")
+                }
+            }
+            .font(.system(size: 96, weight: .bold, design: .rounded))
+            .foregroundColor(iconColor.color)
         }
     }
     
@@ -178,15 +172,96 @@ struct NewListView: View {
                                     }
                                 }
                             Image(systemName: iconName)
-                                .font(.system(.title2, design: .rounded))
+                                .font(.system(.title3, design: .rounded))
                                 .foregroundColor(Color(uiColor: .darkGray))
-                                .padding(8)
                         }
                     }
                 }
             }
-            .buttonStyle(PlainButtonStyle())
-            .padding(.vertical, 17)
+            .padding(.bottom, 17)
+        }
+    }
+    
+    private struct EmojiSelection: View {
+        
+        @Binding var iconName: String
+        @Binding var showEmojiPicker: Bool
+        @Binding var isEmoji: Bool
+        @State private var recentEmojies: [String] = ["😀","🥳","❤️","🎁","🛍"]
+        private let storeKey = "KeyRecentEmojies"
+        
+        private let colums = [
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17),
+            GridItem(.flexible(), spacing: 17),
+        ]
+        
+        var body: some View {
+            LazyVGrid(columns: colums, alignment: .center, spacing: 17) {
+                ForEach(0..<6) { index in
+                    if index == 0 {
+                        ZStack {
+                            EmojiPicker(emoji: $iconName, showKeyboard: $showEmojiPicker)
+                                .frame(width: 0, height: 0)
+                            Button {
+                                showEmojiPicker = true
+                            } label: {
+                                ZStack {
+                                    Circle()
+                                        .foregroundColor(Color(.systemGray6))
+                                        .aspectRatio(1/1, contentMode: .fit)
+                                    Image(systemName: "face.smiling")
+                                        .font(.system(.title3, design: .rounded).bold())
+                                        .foregroundColor(.blue)
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        Button {
+                            iconName = recentEmojies[index-1]
+                            isEmoji = true
+                        } label: {
+                            makeEmojiButtonLabel(index: index-1)
+                        }
+                    }
+                }
+            }
+            .padding(.top, 17)
+            .onAppear {
+                fetchRecentEmojies()
+            }
+        }
+        
+        @ViewBuilder func makeEmojiButtonLabel(index: Int) -> some View {
+            ZStack {
+                Circle()
+                    .foregroundColor(Color(uiColor: .systemGray6))
+                    .aspectRatio(1/1, contentMode: .fit)
+                    .overlay {
+                        if iconName == recentEmojies[index] {
+                            Circle()
+                                .stroke(Color(uiColor: .systemGray2), lineWidth: 3)
+                                .padding(-5)
+                        }
+                    }
+                Text(recentEmojies[index])
+                    .font(.system(.title3))
+                    .foregroundColor(Color(uiColor: .darkGray))
+            }
+        }
+        
+        func fetchRecentEmojies() {
+            if let recentEmojies = NSUbiquitousKeyValueStore.default.array(forKey: storeKey) as? [String] {
+                self.recentEmojies = recentEmojies
+            }
+            else {
+                NSUbiquitousKeyValueStore.default.set(self.recentEmojies, forKey: storeKey)
+                NSUbiquitousKeyValueStore.default.synchronize()
+            }
         }
     }
 }
@@ -215,3 +290,5 @@ struct NewListView_Previews: PreviewProvider {
 //            }
 //        }
 //    }
+
+
