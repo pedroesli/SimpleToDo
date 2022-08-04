@@ -63,7 +63,7 @@ class ContentViewModel: ObservableObject {
     }
     
     private func contextDidSave(notification: Notification) {
-        // Only refresh list and totalUncompletedTaskCount when there was a update on a CDList property
+        // Only refresh lists and totalUncompletedTaskCount when there was a update on a CDList property
         if let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject>,
            !updatedObjects.isEmpty {
             let lists = updatedObjects.compactMap { $0 as? CDList }
