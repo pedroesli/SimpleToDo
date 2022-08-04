@@ -15,6 +15,8 @@ struct NewListView: View {
     @State private var iconColor: ListIconColor = Color.projectColors.listIconColors[0]
     @State private var isEmoji = false
     
+    var completionHandler: (CDList) -> Void
+    
     var body: some View {
         NavigationView {
             List {
@@ -42,9 +44,7 @@ struct NewListView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        
-                    } label: {
+                    Button(action: createList) {
                         Text("OK")
                             .font(.body.bold())
                     }
@@ -52,7 +52,12 @@ struct NewListView: View {
                 }
             }
         }
-        
+    }
+    
+    func createList() {
+        let newList = CDList(title: title, iconColorName: iconColor.name, iconName: iconName, isEmoji: isEmoji)
+        dismiss()
+        completionHandler(newList)
     }
     
     private struct TitleAndIconSection: View {
@@ -280,9 +285,9 @@ struct NewListView: View {
 
 struct NewListView_Previews: PreviewProvider {
     static var previews: some View {
-        NewListView()
+        NewListView(completionHandler: { list in
             
-            
+        })
     }
 }
 

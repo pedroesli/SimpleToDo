@@ -29,35 +29,11 @@ class ContentViewModel: ObservableObject {
         notification = NotificationCenter.default.addObserver(forName: .NSManagedObjectContextDidSave, object: nil, queue: .main, using: contextDidSave(notification:))
     }
     
-    func addItem() {
+    func addItem(list: CDList) {
         withAnimation {
-            let newList = CDList(context: persistenceController.viewContext)
-            newList.id = UUID()
-            newList.title = "List #\(lists.count)"
-            newList.order = Int64(lists.count)
-            newList.uncompletedTaskCount = 0
-            
-            let newIcon = CDIcon(context: persistenceController.viewContext)
-            newIcon.name = Icons.iconNames.randomElement()!
-            newIcon.colorName = Color.projectColors.listIconColors.randomElement()!.name
-            newIcon.isEmoji = false
-            
-            newList.icon = newIcon
-            
-            for i in 0..<2 {
-                let newTask = CDTask(context: persistenceController.viewContext)
-                newTask.id = UUID()
-                newTask.text = "Task #\(i)"
-                newTask.order = Int64(i)
-                newTask.isCompleted = false
-                
-                newList.addToTasks(newTask)
-                newList.uncompletedTaskCount += Int64(1)
-            }
-            
-            totalUncompletedTaskCount += 2
+            list.order = Int64(lists.count)
+            lists.append(list)
             persistenceController.save()
-            lists.append(newList)
         }
     }
     
@@ -132,7 +108,7 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $presentNewListSheet) {
-                NewListView()
+                NewListView(completionHandler: viewModel.addItem(list:))
             }
         }
         .onAppear(perform: viewModel.onViewAppear)
