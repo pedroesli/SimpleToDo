@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37179403289BEF0B005EF0D0 /* String+EmojiCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37179402289BEF0B005EF0D0 /* String+EmojiCheck.swift */; };
 		371D35B92894312C00A19B0F /* AllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D35B82894312C00A19B0F /* AllCell.swift */; };
 		3726461C289AC1DA0043613D /* EmojiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3726461B289AC1DA0043613D /* EmojiPicker.swift */; };
 		375A00392894B594001B53D0 /* NewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A00382894B594001B53D0 /* NewListView.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		37179402289BEF0B005EF0D0 /* String+EmojiCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EmojiCheck.swift"; sourceTree = "<group>"; };
 		371D35B82894312C00A19B0F /* AllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCell.swift; sourceTree = "<group>"; };
 		3726461B289AC1DA0043613D /* EmojiPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPicker.swift; sourceTree = "<group>"; };
 		375A00382894B594001B53D0 /* NewListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListView.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				37D7AC822892FF06008FD958 /* Color+ProjectColors.swift */,
+				37179402289BEF0B005EF0D0 /* String+EmojiCheck.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				37D7AC832892FF06008FD958 /* Color+ProjectColors.swift in Sources */,
 				3726461C289AC1DA0043613D /* EmojiPicker.swift in Sources */,
 				37A12E09289AE316002A8224 /* CDList+CoreDataClass.swift in Sources */,
+				37179403289BEF0B005EF0D0 /* String+EmojiCheck.swift in Sources */,
 				37A12E0A289AE316002A8224 /* CDList+CoreDataProperties.swift in Sources */,
 				37D7ACA228937A21008FD958 /* ListCell.swift in Sources */,
 				371D35B92894312C00A19B0F /* AllCell.swift in Sources */,

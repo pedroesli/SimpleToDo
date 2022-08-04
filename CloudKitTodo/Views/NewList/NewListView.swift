@@ -12,8 +12,7 @@ struct NewListView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var title = ""
     @State private var iconName = "square"
-    @State private var iconColor: ListIconColor = Color.projectColors.listIconColors[4]
-    @State private var showEmojiPicker = false
+    @State private var iconColor: ListIconColor = Color.projectColors.listIconColors[0]
     @State private var isEmoji = false
     
     var body: some View {
@@ -27,14 +26,11 @@ struct NewListView: View {
                 )
                 ColorSelectSection(iconColor: $iconColor)
                 Section {
-                    VStack {
-                        EmojiSelection(iconName: $iconName, showEmojiPicker: $showEmojiPicker, isEmoji: $isEmoji)
-                        IconSelection(iconName: $iconName, isEmoji: $isEmoji)
-                    }
+                    EmojiSelection(iconName: $iconName, isEmoji: $isEmoji)
+                    IconSelection(iconName: $iconName, isEmoji: $isEmoji)
                 }
                 .buttonStyle(PlainButtonStyle())
                 .listRowSeparator(.hidden)
-                //TODO: Create the icon selection view
             }
             .listRowSeparator(.hidden)
             .navigationBarTitleDisplayMode(.inline)
@@ -95,6 +91,8 @@ struct NewListView: View {
             }
             .font(.system(size: 96, weight: .bold, design: .rounded))
             .foregroundColor(iconColor.color)
+            .frame(height: 120)
+            .padding(.bottom, 5)
         }
     }
     
@@ -185,9 +183,9 @@ struct NewListView: View {
     private struct EmojiSelection: View {
         
         @Binding var iconName: String
-        @Binding var showEmojiPicker: Bool
         @Binding var isEmoji: Bool
         @State private var recentEmojies: [String] = ["😀","🥳","❤️","🎁","🛍"]
+        @State private var showEmojiPicker = false
         private let storeKey = "KeyRecentEmojies"
         
         private let colums = [
@@ -204,8 +202,13 @@ struct NewListView: View {
                 ForEach(0..<6) { index in
                     if index == 0 {
                         ZStack {
-                            EmojiPicker(emoji: $iconName, showKeyboard: $showEmojiPicker)
-                                .frame(width: 0, height: 0)
+                            EmojiPicker(
+                                emoji: $iconName,
+                                showKeyboard: $showEmojiPicker,
+                                isEmoji: $isEmoji,
+                                completionHandler: addRecentEmoji(emoji:)
+                            )
+                            .frame(width: 0, height: 0)
                             Button {
                                 showEmojiPicker = true
                             } label: {
@@ -232,7 +235,7 @@ struct NewListView: View {
             }
             .padding(.top, 17)
             .onAppear {
-                fetchRecentEmojies()
+                getRecentEmojies()
             }
         }
         
@@ -254,14 +257,24 @@ struct NewListView: View {
             }
         }
         
-        func fetchRecentEmojies() {
+        func getRecentEmojies() {
             if let recentEmojies = NSUbiquitousKeyValueStore.default.array(forKey: storeKey) as? [String] {
                 self.recentEmojies = recentEmojies
             }
             else {
-                NSUbiquitousKeyValueStore.default.set(self.recentEmojies, forKey: storeKey)
-                NSUbiquitousKeyValueStore.default.synchronize()
+                storeRecenteEmojies()
             }
+        }
+        
+        func addRecentEmoji(emoji: String) {
+            recentEmojies.removeLast()
+            recentEmojies.insert(emoji, at: 0)
+            storeRecenteEmojies()
+        }
+        
+        func storeRecenteEmojies() {
+            NSUbiquitousKeyValueStore.default.set(self.recentEmojies, forKey: storeKey)
+            NSUbiquitousKeyValueStore.default.synchronize()
         }
     }
 }

@@ -27,6 +27,8 @@ class UIEmojiTextField: UITextField {
 struct EmojiPicker: UIViewRepresentable {
     @Binding var emoji: String
     @Binding var showKeyboard: Bool
+    @Binding var isEmoji: Bool
+    var completionHandler: (String) -> Void
     
     func makeUIView(context: Context) -> UIView {
         let view = UIView()
@@ -34,7 +36,7 @@ struct EmojiPicker: UIViewRepresentable {
         emojiTextField.keyboardType = .default
         emojiTextField.isHidden = true
         emojiTextField.delegate = context.coordinator
-        context.coordinator.textfield = emojiTextField
+        context.coordinator.emojiTextField = emojiTextField
         
         view.addSubview(emojiTextField)
         return view
@@ -42,7 +44,9 @@ struct EmojiPicker: UIViewRepresentable {
     
     func updateUIView(_ uiView: UIView, context: Context) {
         if showKeyboard {
-            context.coordinator.textfield?.becomeFirstResponder()
+            DispatchQueue.main.async {
+                context.coordinator.emojiTextField?.becomeFirstResponder()
+            }
         }
     }
     
@@ -52,7 +56,7 @@ struct EmojiPicker: UIViewRepresentable {
     
     class Coordinator: NSObject, UITextFieldDelegate {
         var parent: EmojiPicker
-        var textfield: UIEmojiTextField?
+        var emojiTextField: UIEmojiTextField?
         
         init(parent: EmojiPicker) {
             self.parent = parent
@@ -60,9 +64,14 @@ struct EmojiPicker: UIViewRepresentable {
         
         func textFieldDidChangeSelection(_ textField: UITextField) {
             DispatchQueue.main.async { [weak self] in
-                self?.parent.emoji = textField.text ?? ""
-                textField.resignFirstResponder()
                 self?.parent.showKeyboard = false
+                if let text = textField.text, text.containsOnlyEmoji {
+                    self?.parent.emoji = text
+                    self?.parent.isEmoji = true
+                    textField.text = ""
+                    self?.parent.completionHandler(text)
+                }
+                textField.resignFirstResponder()
             }
         }
     }
