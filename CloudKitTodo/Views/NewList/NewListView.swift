@@ -11,7 +11,7 @@ struct NewListView: View {
     
     @Environment(\.dismiss) private var dismiss
     @State private var title = ""
-    @State private var iconName = "square"
+    @State private var iconName = "circle"
     @State private var iconColor: ListIconColor = Color.projectColors.listIconColors[0]
     @State private var isEmoji = false
     
@@ -64,7 +64,7 @@ struct NewListView: View {
         
         var body: some View {
             Section {
-                VStack(spacing: 15) {
+                VStack(spacing: 20) {
                     makeIconPreview(iconName, isEmoji)
                     //MARK: Replace with UIKit textfield in a future update
                     TextField("", text: $title,prompt: Text("List Title"))
@@ -92,7 +92,6 @@ struct NewListView: View {
             .font(.system(size: 96, weight: .bold, design: .rounded))
             .foregroundColor(iconColor.color)
             .frame(height: 120)
-            .padding(.bottom, 5)
         }
     }
     
