@@ -24,6 +24,7 @@ class UIEmojiTextField: UITextField {
     }
 }
 
+// Might have some weird behavior in the simultar, but works perfectly fine in a device. 
 struct EmojiPicker: UIViewRepresentable {
     @Binding var emoji: String
     @Binding var showKeyboard: Bool
@@ -64,13 +65,13 @@ struct EmojiPicker: UIViewRepresentable {
         
         func textFieldDidChangeSelection(_ textField: UITextField) {
             DispatchQueue.main.async { [weak self] in
-                self?.parent.showKeyboard = false
                 if let text = textField.text, text.containsOnlyEmoji {
                     self?.parent.emoji = text
                     self?.parent.isEmoji = true
-                    textField.text = ""
                     self?.parent.completionHandler(text)
                 }
+                textField.text = ""
+                self?.parent.showKeyboard = false
                 textField.resignFirstResponder()
             }
         }
