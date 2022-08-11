@@ -11,6 +11,7 @@ import SwiftUI
 struct ProjectColors {
     let listIconColors = ListIconColor.colors
     let textColors = TextColors()
+    let newListColors = NewListColors()
 }
 
 struct ListIconColor {
@@ -46,6 +47,16 @@ struct TextColors {
     }
     var taskCountColor: Color {
         Color("TaskCountColor")
+    }
+}
+
+struct NewListColors {
+    var newListBackgroundColor: Color {
+        Color("NewListBackgroundColor")
+    }
+    
+    var newListIconColor: Color {
+        Color("NewListIconColor")
     }
 }
 

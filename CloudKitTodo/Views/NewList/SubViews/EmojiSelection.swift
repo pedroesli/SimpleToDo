@@ -41,7 +41,7 @@ struct EmojiSelection: View {
                         } label: {
                             ZStack {
                                 Circle()
-                                    .foregroundColor(Color(.systemGray6))
+                                    .foregroundColor(.projectColors.newListColors.newListBackgroundColor)
                                     .aspectRatio(1/1, contentMode: .fit)
                                 Image(systemName: "face.smiling")
                                     .font(.system(.title3, design: .rounded).bold())
@@ -69,7 +69,7 @@ struct EmojiSelection: View {
     @ViewBuilder func makeEmojiButtonLabel(index: Int) -> some View {
         ZStack {
             Circle()
-                .foregroundColor(Color(uiColor: .systemGray6))
+                .foregroundColor(.projectColors.newListColors.newListBackgroundColor)
                 .aspectRatio(1/1, contentMode: .fit)
                 .overlay {
                     if iconName == recentEmojies[index] {
@@ -80,7 +80,6 @@ struct EmojiSelection: View {
                 }
             Text(recentEmojies[index])
                 .font(.system(.title3))
-                .foregroundColor(Color(uiColor: .darkGray))
         }
     }
     

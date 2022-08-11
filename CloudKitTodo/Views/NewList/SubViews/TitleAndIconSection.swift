@@ -18,14 +18,11 @@ struct TitleAndIconSection: View {
         Section {
             VStack(spacing: 20) {
                 makeIconPreview(iconName, isEmoji)
-                //MARK: Replace with UIKit textfield in a future update
-                TextField("", text: $title,prompt: Text("List Title"))
-                    .foregroundColor(iconColor.color)
-                    .font(.system(.title2, design: .rounded).bold())
-                    .padding()
+                NewListTextField(text: $title, iconColor: $iconColor, placeHolder: "List Title")
+                    .frame(height: 60)
                     .background {
                         RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .foregroundColor(Color(uiColor: .systemGray6))
+                            .foregroundColor(.projectColors.newListColors.newListBackgroundColor)
                     }
             }
             .padding(.vertical, 15)
@@ -47,8 +44,15 @@ struct TitleAndIconSection: View {
     }
 }
 
-//struct TitleAndIconSection_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TitleAndIconSection()
-//    }
-//}
+struct TitleAndIconSection_Previews: PreviewProvider {
+    static var previews: some View {
+        List {
+            TitleAndIconSection(
+                title: .constant(""),
+                iconName: .constant("circle"),
+                iconColor: .constant(ListIconColor.colors.first!),
+                isEmoji: .constant(false)
+            )
+        }
+    }
+}

@@ -31,7 +31,7 @@ struct IconSelection: View {
                 } label: {
                     ZStack {
                         Circle()
-                            .foregroundColor(Color(uiColor: .systemGray6))
+                            .foregroundColor(.projectColors.newListColors.newListBackgroundColor)
                             .aspectRatio(1/1, contentMode: .fit)
                             .overlay {
                                 if self.iconName == iconName {
@@ -42,7 +42,7 @@ struct IconSelection: View {
                             }
                         Image(systemName: iconName)
                             .font(.system(.title3, design: .rounded))
-                            .foregroundColor(Color(uiColor: .darkGray))
+                            .foregroundColor(.projectColors.newListColors.newListIconColor)
                     }
                 }
             }
