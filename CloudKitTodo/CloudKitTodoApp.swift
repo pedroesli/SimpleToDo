@@ -9,12 +9,14 @@ import SwiftUI
 
 @main
 struct CloudKitTodoApp: App {
-    let persistenceController = PersistenceController.shared
 
+    let settingsManager = SettingsManager()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.viewContext)
+                .preferredColorScheme(.none)
+                .environmentObject(settingsManager)
         }
     }
 }

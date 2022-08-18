@@ -11,7 +11,7 @@ struct EmojiSelection: View {
     
     @Binding var iconName: String
     @Binding var isEmoji: Bool
-    @State private var recentEmojies: [String] = ["😀","🥳","❤️","🎁","🛍"]
+    @State private var recentEmojies: [String] = KeyStore.shared.getEmojiList()
     @State private var showEmojiPicker = false
     private let storeKey = "KeyRecentEmojies"
     
@@ -83,24 +83,18 @@ struct EmojiSelection: View {
         }
     }
     
-    func getRecentEmojies() {
-        if let recentEmojies = NSUbiquitousKeyValueStore.default.array(forKey: storeKey) as? [String] {
-            self.recentEmojies = recentEmojies
-        }
-        else {
-            storeRecenteEmojies()
-        }
-    }
-    
     func addRecentEmoji(emoji: String) {
         recentEmojies.removeLast()
         recentEmojies.insert(emoji, at: 0)
-        storeRecenteEmojies()
+        storeRecentEmojies()
     }
     
-    func storeRecenteEmojies() {
-        NSUbiquitousKeyValueStore.default.set(self.recentEmojies, forKey: storeKey)
-        NSUbiquitousKeyValueStore.default.synchronize()
+    func getRecentEmojies() {
+        self.recentEmojies = KeyStore.shared.getEmojiList()
+    }
+    
+    func storeRecentEmojies() {
+        KeyStore.shared.storeEmojiList(recentEmojies)
     }
 }
 
