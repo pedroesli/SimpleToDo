@@ -7,15 +7,23 @@
 
 import Foundation
 
-struct KeyStore {
+class KeyValueStore {
     
-    static let shared = KeyStore()
+    static let shared = KeyValueStore()
+    static let keyValueStoreDidChangeNotification = Notification.Name(rawValue: "valuesChanged-notification")
     
     private let store = NSUbiquitousKeyValueStore.default
     private let emojiStoreKey = "KeyRecentEmojies"
     private let settingsStoreKey = "KeySettings"
     
-    private init() { }
+    private init() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(ubiquitousKeyValueStoreDidChange(_:)),
+            name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+            object: store
+        )
+    }
     
     func storeEmojiList(_ emojies: [String]) {
         store.set(emojies, forKey: emojiStoreKey)
@@ -54,5 +62,20 @@ struct KeyStore {
         
         let defaultSettings = Settings()
         return defaultSettings
+    }
+    
+    /*
+        Get Key Value Store notification and notify only a value changed
+     */
+    @objc private func ubiquitousKeyValueStoreDidChange(_ notification: Notification) {
+        guard let userInfo = notification.userInfo else { return }
+        guard let reasonForChange = userInfo[NSUbiquitousKeyValueStoreChangeReasonKey] as? Int else { return }
+        
+        if reasonForChange == NSUbiquitousKeyValueStoreServerChange {
+            NotificationCenter.default.post(name: KeyValueStore.keyValueStoreDidChangeNotification, object: nil)
+        }
+        else if reasonForChange == NSUbiquitousKeyValueStoreQuotaViolationChange {
+            print("[KeyStore] The app’s key-value store has exceeded its space quota on the iCloud server!")
+        }
     }
 }

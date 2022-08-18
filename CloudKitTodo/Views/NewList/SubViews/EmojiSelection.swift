@@ -11,7 +11,7 @@ struct EmojiSelection: View {
     
     @Binding var iconName: String
     @Binding var isEmoji: Bool
-    @State private var recentEmojies: [String] = KeyStore.shared.getEmojiList()
+    @State private var recentEmojies: [String] = KeyValueStore.shared.getEmojiList()
     @State private var showEmojiPicker = false
     private let storeKey = "KeyRecentEmojies"
     
@@ -90,11 +90,11 @@ struct EmojiSelection: View {
     }
     
     func getRecentEmojies() {
-        self.recentEmojies = KeyStore.shared.getEmojiList()
+        self.recentEmojies = KeyValueStore.shared.getEmojiList()
     }
     
     func storeRecentEmojies() {
-        KeyStore.shared.storeEmojiList(recentEmojies)
+        KeyValueStore.shared.storeEmojiList(recentEmojies)
     }
 }
 

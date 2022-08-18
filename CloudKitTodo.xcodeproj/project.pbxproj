@@ -13,7 +13,7 @@
 		37265AD228AC6B5500C28EEF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37265AD128AC6B5500C28EEF /* SettingsView.swift */; };
 		37265AD428AC746C00C28EEF /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37265AD328AC746C00C28EEF /* SettingsManager.swift */; };
 		37265AD628AC836200C28EEF /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37265AD528AC836200C28EEF /* Settings.swift */; };
-		37265AD828AD386000C28EEF /* KeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37265AD728AD386000C28EEF /* KeyStore.swift */; };
+		37265AD828AD386000C28EEF /* KeyValueStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37265AD728AD386000C28EEF /* KeyValueStore.swift */; };
 		37295F9E289C11C80067F8DA /* TitleAndIconSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37295F9D289C11C80067F8DA /* TitleAndIconSection.swift */; };
 		37295FA1289C120A0067F8DA /* ColorSelectSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37295FA0289C120A0067F8DA /* ColorSelectSection.swift */; };
 		37295FA3289C122D0067F8DA /* IconSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37295FA2289C122D0067F8DA /* IconSelection.swift */; };
@@ -47,7 +47,7 @@
 		37265AD128AC6B5500C28EEF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		37265AD328AC746C00C28EEF /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		37265AD528AC836200C28EEF /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		37265AD728AD386000C28EEF /* KeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStore.swift; sourceTree = "<group>"; };
+		37265AD728AD386000C28EEF /* KeyValueStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStore.swift; sourceTree = "<group>"; };
 		37295F9D289C11C80067F8DA /* TitleAndIconSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndIconSection.swift; sourceTree = "<group>"; };
 		37295FA0289C120A0067F8DA /* ColorSelectSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSelectSection.swift; sourceTree = "<group>"; };
 		37295FA2289C122D0067F8DA /* IconSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelection.swift; sourceTree = "<group>"; };
@@ -168,7 +168,7 @@
 				37D7AC8528932FCA008FD958 /* Icons.swift */,
 				37265AD328AC746C00C28EEF /* SettingsManager.swift */,
 				37FB7BAE2890C99E00915411 /* Persistence.swift */,
-				37265AD728AD386000C28EEF /* KeyStore.swift */,
+				37265AD728AD386000C28EEF /* KeyValueStore.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -322,7 +322,7 @@
 				37265AD228AC6B5500C28EEF /* SettingsView.swift in Sources */,
 				37D7ACA228937A21008FD958 /* ListCell.swift in Sources */,
 				37295FA1289C120A0067F8DA /* ColorSelectSection.swift in Sources */,
-				37265AD828AD386000C28EEF /* KeyStore.swift in Sources */,
+				37265AD828AD386000C28EEF /* KeyValueStore.swift in Sources */,
 				371D35B92894312C00A19B0F /* AllCell.swift in Sources */,
 				37FB7BA62890C99B00915411 /* CloudKitTodoApp.swift in Sources */,
 				37A12E07289AE316002A8224 /* CDTask+CoreDataClass.swift in Sources */,
