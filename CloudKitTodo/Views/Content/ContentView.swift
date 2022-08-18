@@ -11,6 +11,7 @@ struct ContentView: View {
     
     @StateObject private var viewModel = ContentViewModel()
     @State private var presentNewListSheet = false
+    @State private var presentSettingsSheet = false
 
     var body: some View {
         NavigationView {
@@ -21,9 +22,18 @@ struct ContentView: View {
                 }
                 .onDelete(perform: viewModel.deleteItems)
                 .id(UUID())
+                
+                
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        presentSettingsSheet = true
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         presentNewListSheet = true
@@ -33,13 +43,15 @@ struct ContentView: View {
                             Text("New List")
                         }
                         .font(.system(.body, design: .rounded).bold())
-                        .foregroundColor(.accentColor)
                     }
 
                 }
             }
             .sheet(isPresented: $presentNewListSheet) {
                 NewListView(completionHandler: viewModel.addItem(list:))
+            }
+            .sheet(isPresented: $presentSettingsSheet) {
+                SettingsView()
             }
         }
         .onAppear(perform: viewModel.onViewAppear)

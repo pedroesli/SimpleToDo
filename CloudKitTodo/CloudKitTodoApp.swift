@@ -10,12 +10,12 @@ import SwiftUI
 @main
 struct CloudKitTodoApp: App {
 
-    let settingsManager = SettingsManager()
+    @StateObject var settingsManager = SettingsManager()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .preferredColorScheme(.none)
+                .preferredColorScheme(settingsManager.settings.colorScheme)
                 .environmentObject(settingsManager)
         }
     }

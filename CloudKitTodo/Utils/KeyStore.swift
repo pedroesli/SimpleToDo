@@ -20,8 +20,6 @@ struct KeyStore {
     func storeEmojiList(_ emojies: [String]) {
         store.set(emojies, forKey: emojiStoreKey)
         store.synchronize()
-        
-        
     }
     
     /*
@@ -32,23 +30,29 @@ struct KeyStore {
             return emojies
         }
         
-        let defaultEmojies = ["😀","🥳","❤️","🎁","🛍"]
-        storeEmojiList(defaultEmojies)
-        return defaultEmojies
+        // Default emojies
+        return ["😀","🥳","❤️","🎁","🛍"]
     }
     
     func storeSettings(_ settings: Settings) {
-        store.set(settings, forKey: settingsStoreKey)
-        store.synchronize()
+        do  {
+            let data = try JSONEncoder().encode(settings)
+            store.set(data, forKey: settingsStoreKey)
+            store.synchronize()
+        }
+        catch {
+            print("[KeyStore] Could not store settings, error: \(error)")
+        }
     }
     
     func getSettings() -> Settings {
-        if let settings = store.object(forKey: settingsStoreKey) as? Settings {
-            return settings
+        if let data = store.data(forKey: settingsStoreKey) {
+            if let settings = try? JSONDecoder().decode(Settings.self, from: data) {
+                return settings
+            }
         }
         
         let defaultSettings = Settings()
-        storeSettings(defaultSettings)
-        return Settings()
+        return defaultSettings
     }
 }
