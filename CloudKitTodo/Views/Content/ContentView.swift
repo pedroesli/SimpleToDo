@@ -12,7 +12,8 @@ struct ContentView: View {
     @StateObject private var viewModel = ContentViewModel()
     @State private var presentNewListSheet = false
     @State private var presentSettingsSheet = false
-
+    @EnvironmentObject private var settingsManager: SettingsManager
+    
     var body: some View {
         NavigationView {
             List {
@@ -55,6 +56,7 @@ struct ContentView: View {
             }
         }
         .onAppear(perform: viewModel.onViewAppear)
+        .preferredColorScheme(<#T##colorScheme: ColorScheme?##ColorScheme?#>)
     }
     
 }

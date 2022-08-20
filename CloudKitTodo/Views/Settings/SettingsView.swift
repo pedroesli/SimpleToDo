@@ -9,8 +9,10 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @EnvironmentObject private var settingsManager: SettingsManager
     @State private var selectedAppearance = 1
+    @EnvironmentObject private var settingsManager: SettingsManager
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var systemColorScheme
     
     var body: some View {
         NavigationView {
@@ -52,12 +54,18 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
-            .preferredColorScheme(settingsManager.settings.colorScheme)
             .onAppear {
-                selectedAppearance = settingsManager.getSelectedAppearance()
+                selectedAppearance = settingsManager.getSelectedAppearanceId()
             }
             .onChange(of: selectedAppearance) { newValue in
-                settingsManager.setSelectedAppearance(newValue)
+                settingsManager.selectAppearance(newValue)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: dismiss.callAsFunction) {
+                        Text("Done")
+                    }
+                }
             }
         }
     }
