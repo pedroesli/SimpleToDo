@@ -22,8 +22,6 @@ struct ContentView: View {
                 }
                 .onDelete(perform: viewModel.deleteItems)
                 .id(UUID())
-                
-                
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
