@@ -19,8 +19,12 @@ struct ContentView: View {
                 AllCell(uncompletedTaskCount: $viewModel.totalUncompletedTaskCount)
                 ForEach(viewModel.lists) { list in
                     ListCell(list: list)
+                        .onDrag {
+                            return NSItemProvider()
+                        }
                 }
-                .onDelete(perform: viewModel.deleteItems)
+                .onDelete(perform: viewModel.deleteItem)
+                .onMove(perform: viewModel.moveItem)
                 .id(UUID())
             }
             .navigationBarTitleDisplayMode(.inline)

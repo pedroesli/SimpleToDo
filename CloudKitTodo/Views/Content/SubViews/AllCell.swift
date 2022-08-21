@@ -29,7 +29,7 @@ struct AllCell: View {
                         .foregroundColor(Color("CountBackgroundColor"))
                 }
         }
-        .padding(.bottom, 30)
+        .padding(.vertical, 15)
         .listRowBackground(Color.clear)
     }
 }

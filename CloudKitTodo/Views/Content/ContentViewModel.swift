@@ -14,19 +14,12 @@ class ContentViewModel: ObservableObject {
     @Published var totalUncompletedTaskCount = 0
     
     private var persistenceController = PersistenceController.shared
-    private var notification: NSObjectProtocol?
-    
-    deinit {
-        if let notification = notification {
-            NotificationCenter.default.removeObserver(notification)
-        }
-    }
     
     func onViewAppear() {
         lists = persistenceController.fetchLists()
         countTotalUncompletedTaskCount()
         
-        notification = NotificationCenter.default.addObserver(forName: .NSManagedObjectContextDidSave, object: nil, queue: .main, using: contextDidSave(notification:))
+        NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave(notification:)), name: .NSManagedObjectContextDidSave, object: nil)
     }
     
     func addItem(list: CDList) {
@@ -37,7 +30,7 @@ class ContentViewModel: ObservableObject {
         }
     }
     
-    func deleteItems(offsets: IndexSet) {
+    func deleteItem(offsets: IndexSet) {
         withAnimation {
             offsets
                 .map { lists[$0] }
@@ -48,6 +41,32 @@ class ContentViewModel: ObservableObject {
             lists.remove(atOffsets: offsets)
             persistenceController.save()
         }
+    }
+    
+    func moveItem(from source: IndexSet, to destination: Int) {
+        guard let sourceIndex = source.first else { return }
+        guard sourceIndex != destination else { return }
+        let listSource = lists[sourceIndex]
+        let listDestination = lists[destination > sourceIndex ? destination-1 : destination]
+        let listDestinationOrder = listDestination.order
+        
+        lists.move(fromOffsets: source, toOffset: destination)
+        
+        if destination > sourceIndex {
+            for listItem in lists.filter({ $0.order <= listDestinationOrder }) {
+                listItem.order -= 1
+            }
+        }
+        else {
+            for listItem in lists.filter({ $0.order >= listDestinationOrder }) {
+                listItem.order += 1
+            }
+        }
+        
+        listSource.order = listDestinationOrder
+        persistenceController.save()
+        
+        print("source: \(sourceIndex), destination: \(destination)")
     }
     
     private func countTotalUncompletedTaskCount() {
@@ -62,14 +81,16 @@ class ContentViewModel: ObservableObject {
         }
     }
     
-    private func contextDidSave(notification: Notification) {
+    @objc private func contextDidSave(notification: Notification) {
         // Only refresh lists and totalUncompletedTaskCount when there was a update on a CDList property
         if let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject>,
            !updatedObjects.isEmpty {
             let lists = updatedObjects.compactMap { $0 as? CDList }
             if !lists.isEmpty {
-                self.objectWillChange.send()
-                countTotalUncompletedTaskCount()
+                DispatchQueue.main.async { [weak self] in
+                    self?.objectWillChange.send()
+                    self?.countTotalUncompletedTaskCount()
+                }
             }
         }
     }
