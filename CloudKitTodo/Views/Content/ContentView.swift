@@ -16,7 +16,6 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                AllCell(uncompletedTaskCount: $viewModel.totalUncompletedTaskCount)
                 ForEach(viewModel.lists) { list in
                     ListCell(list: list)
                         .onDrag {

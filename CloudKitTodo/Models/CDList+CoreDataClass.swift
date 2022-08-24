@@ -25,10 +25,4 @@ public class CDList: NSManagedObject {
         
         self.icon = icon
     }
-    
-    func swapOrder(with list: CDList) {
-        let temp = self.order
-        self.order = list.order
-        list.order = temp
-    }
 }

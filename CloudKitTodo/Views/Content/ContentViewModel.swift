@@ -11,13 +11,11 @@ import CoreData
 class ContentViewModel: ObservableObject {
     
     @Published var lists: [CDList] = []
-    @Published var totalUncompletedTaskCount = 0
     
     private var persistenceController = PersistenceController.shared
     
     func onViewAppear() {
         lists = persistenceController.fetchLists()
-        countTotalUncompletedTaskCount()
         
         NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave(notification:)), name: .NSManagedObjectContextDidSave, object: nil)
     }
@@ -35,7 +33,6 @@ class ContentViewModel: ObservableObject {
             offsets
                 .map { lists[$0] }
                 .forEach { list in
-                    totalUncompletedTaskCount -= Int(list.uncompletedTaskCount)
                     persistenceController.viewContext.delete(list)
                 }
             lists.remove(atOffsets: offsets)
@@ -69,27 +66,14 @@ class ContentViewModel: ObservableObject {
         print("source: \(sourceIndex), destination: \(destination)")
     }
     
-    private func countTotalUncompletedTaskCount() {
-        DispatchQueue.global(qos: .userInteractive).async {
-            var count = 0
-            for list in self.lists {
-                count += Int(list.uncompletedTaskCount)
-            }
-            DispatchQueue.main.async {
-                self.totalUncompletedTaskCount = count
-            }
-        }
-    }
-    
     @objc private func contextDidSave(notification: Notification) {
-        // Only refresh lists and totalUncompletedTaskCount when there was a update on a CDList property
+        // Only refresh lists when there was a update on a CDList property
         if let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject>,
            !updatedObjects.isEmpty {
             let lists = updatedObjects.compactMap { $0 as? CDList }
             if !lists.isEmpty {
                 DispatchQueue.main.async { [weak self] in
                     self?.objectWillChange.send()
-                    self?.countTotalUncompletedTaskCount()
                 }
             }
         }
