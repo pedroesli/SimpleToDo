@@ -17,7 +17,7 @@ struct ListCell: View {
                 .font(.body.bold())
                 .foregroundColor(Color(list.icon?.colorName ?? ""))
             Text(list.title ?? "")
-                .font(.system(.title3, design: .rounded))
+                .font(.system(.body, design: .rounded))
                 .foregroundColor(.projectColors.textColors.textColor)
                 .padding(.leading, 16)
             Spacer()
