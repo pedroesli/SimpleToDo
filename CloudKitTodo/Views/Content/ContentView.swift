@@ -38,7 +38,6 @@ struct ContentView: View {
                         presentSettingsSheet = true
                     } label: {
                         Image(systemName: "gearshape")
-                            .font(.body.bold())
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
