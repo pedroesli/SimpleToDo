@@ -12,6 +12,7 @@ class SettingsManager: ObservableObject {
     @Published var settings: Settings = KeyValueStore.shared.getSettings()
     
     init() {
+        updateAppearance()
         NotificationCenter.default.addObserver(self, selector: #selector(settingsKeyValueStoreDidChange), name: KeyValueStore.keyValueStoreDidChangeNotification, object: nil)
     }
     

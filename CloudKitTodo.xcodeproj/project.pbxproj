@@ -114,6 +114,7 @@
 		37265AD028AC6B2A00C28EEF /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				37265AD328AC746C00C28EEF /* SettingsManager.swift */,
 				37265AD128AC6B5500C28EEF /* SettingsView.swift */,
 			);
 			path = Settings;
@@ -163,7 +164,6 @@
 			isa = PBXGroup;
 			children = (
 				37D7AC8528932FCA008FD958 /* Icons.swift */,
-				37265AD328AC746C00C28EEF /* SettingsManager.swift */,
 				37FB7BAE2890C99E00915411 /* Persistence.swift */,
 				37265AD728AD386000C28EEF /* KeyValueStore.swift */,
 			);
