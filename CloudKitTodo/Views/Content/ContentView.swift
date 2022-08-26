@@ -13,6 +13,10 @@ struct ContentView: View {
     @State private var presentNewListSheet = false
     @State private var presentSettingsSheet = false
     
+    init() {
+        UITableView.appearance().backgroundColor = .clear
+    }
+    
     var body: some View {
         NavigationView {
             List {
@@ -26,6 +30,7 @@ struct ContentView: View {
                 .onMove(perform: viewModel.moveItem)
                 .id(UUID())
             }
+            .background(Color.projectColors.appBackgroundColor.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -63,6 +68,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .preferredColorScheme(.light)
+            .preferredColorScheme(.dark)
     }
 }

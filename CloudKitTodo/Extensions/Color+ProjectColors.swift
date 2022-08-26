@@ -12,6 +12,7 @@ struct ProjectColors {
     let listIconColors = ListIconColor.colors
     let textColors = TextColors()
     let newListColors = NewListColors()
+    let appBackgroundColor = Color("AppBackgroundColor")
 }
 
 struct ListIconColor {
