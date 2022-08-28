@@ -11,12 +11,18 @@ import Combine
 struct Settings: Codable {
     
     enum CodingKeys: String, CodingKey {
-        case colorScheme
+        case preferredColorScheme
         case icloudSync
     }
     
-    var colorScheme: ColorScheme?
-    var isicloudSyncOn: Bool = true
+    var preferredColorScheme: ColorScheme?
+    var isicloudSyncOn: Bool = true {
+        didSet {
+            isicloudSyncOnChanged?(isicloudSyncOn)
+        }
+    }
+    
+    var isicloudSyncOnChanged: ((Bool) -> Void)?
     
     init() {
         
@@ -24,17 +30,17 @@ struct Settings: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        let interfaceStyleRawValue = try values.decode(Int.self, forKey: .colorScheme)
+        let interfaceStyleRawValue = try values.decode(Int.self, forKey: .preferredColorScheme)
         
-        colorScheme = ColorScheme(UIUserInterfaceStyle(rawValue: interfaceStyleRawValue)!)
+        preferredColorScheme = ColorScheme(UIUserInterfaceStyle(rawValue: interfaceStyleRawValue)!)
         isicloudSyncOn = try values.decode(Bool.self, forKey: .icloudSync)
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        let userInterfaceStyle = UIUserInterfaceStyle(colorScheme)
+        let userInterfaceStyle = UIUserInterfaceStyle(preferredColorScheme)
         
-        try container.encode(userInterfaceStyle.rawValue, forKey: .colorScheme)
+        try container.encode(userInterfaceStyle.rawValue, forKey: .preferredColorScheme)
         try container.encode(isicloudSyncOn, forKey: .icloudSync)
     }
 }

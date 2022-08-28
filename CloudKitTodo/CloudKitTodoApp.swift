@@ -15,7 +15,7 @@ struct CloudKitTodoApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .preferredColorScheme(settingsManager.settings.colorScheme)
+                .preferredColorScheme(settingsManager.settings.preferredColorScheme)
                 .environmentObject(settingsManager)
         }
     }

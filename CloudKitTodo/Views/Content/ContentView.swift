@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var presentNewListSheet = false
     @State private var presentSettingsSheet = false
     @EnvironmentObject private var settingsManager: SettingsManager
+    @Environment(\.colorScheme) private var systemColorScheme: ColorScheme
     
     var body: some View {
         NavigationView {
@@ -28,9 +29,6 @@ struct ContentView: View {
                 .onMove(perform: viewModel.moveItem)
                 .id(UUID())
             }
-            .onChange(of: viewModel.lists, perform: { newValue in
-                print("Lists Changed: \(newValue)")
-            })
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -55,11 +53,11 @@ struct ContentView: View {
             }
             .sheet(isPresented: $presentNewListSheet) {
                 NewListView(completionHandler: viewModel.addItem(list:))
-                    .preferredColorScheme(settingsManager.settings.colorScheme)
+                    .preferredColorScheme(settingsManager.settings.preferredColorScheme ?? systemColorScheme)
             }
             .sheet(isPresented: $presentSettingsSheet) {
                 SettingsView()
-                    .preferredColorScheme(settingsManager.settings.colorScheme)
+                    .preferredColorScheme(settingsManager.settings.preferredColorScheme ?? systemColorScheme)
             }
         }
         .onAppear(perform: viewModel.onViewAppear)

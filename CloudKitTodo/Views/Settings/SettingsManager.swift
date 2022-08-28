@@ -14,12 +14,8 @@ class SettingsManager: ObservableObject {
     
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(settingsKeyValueStoreDidChange), name: KeyValueStore.keyValueStoreDidChangeNotification, object: nil)
-        $settings
-            .receive(on: RunLoop.main)
-            .dropFirst()
-            .map(\.isicloudSyncOn)
-            .sink(receiveValue: icloudSyncChanged(isOn:))
-            .store(in: &cancellables)
+        
+        settings.isicloudSyncOnChanged = icloudSyncChanged(isOn:)
     }
     
     /**
@@ -28,13 +24,13 @@ class SettingsManager: ObservableObject {
         2 = Dark Mode
      */
     func getSelectedAppearanceId() -> Int {
-        return UIUserInterfaceStyle(settings.colorScheme).rawValue
+        return UIUserInterfaceStyle(settings.preferredColorScheme).rawValue
     }
     
     /// Set the app appearance and updates the settings in the iCloud
     func selectAppearance(_ selectedAppearance: Int) {
-        guard selectedAppearance != UIUserInterfaceStyle(settings.colorScheme).rawValue else { return }
-        settings.colorScheme = ColorScheme(UIUserInterfaceStyle(rawValue: selectedAppearance)!)
+        guard selectedAppearance != UIUserInterfaceStyle(settings.preferredColorScheme).rawValue else { return }
+        settings.preferredColorScheme = ColorScheme(UIUserInterfaceStyle(rawValue: selectedAppearance)!)
         saveSettings()
     }
     

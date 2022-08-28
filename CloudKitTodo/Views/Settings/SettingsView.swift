@@ -111,7 +111,7 @@ struct SettingsView_Previews: PreviewProvider {
     
     static var previews: some View {
         SettingsView()
-            .preferredColorScheme(settingsManager.settings.colorScheme)
+            .preferredColorScheme(settingsManager.settings.preferredColorScheme)
             .environmentObject(settingsManager)
     }
 }
