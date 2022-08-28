@@ -15,10 +15,8 @@ struct CloudKitTodoApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .preferredColorScheme(settingsManager.settings.colorScheme)
                 .environmentObject(settingsManager)
-//                .onChange(of: settingsManager.settings.colorScheme) { newValue in
-//                    print("User seleted: \(newValue)")
-//                }
         }
     }
 }

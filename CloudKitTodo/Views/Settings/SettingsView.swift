@@ -12,30 +12,14 @@ struct SettingsView: View {
     @State private var selectedAppearance = 1
     @EnvironmentObject private var settingsManager: SettingsManager
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.colorScheme) private var systemColorScheme
     
     var body: some View {
         NavigationView {
             Form {
                 //MARK: General Section
                 Section("General") {
-                    Picker(selection: $selectedAppearance) {
-                        Group {
-                            Text("Automatic").tag(1)
-                            Text("Light").tag(2)
-                            Text("Dark").tag(3)
-                        }
-                        .foregroundColor(.projectColors.textColors.textColor)
-                    } label: {
-                        Label {
-                            Text("Appearance")
-                                .foregroundColor(.projectColors.textColors.textColor)
-                        } icon: {
-                            Image(systemName: "rectangle.fill.on.rectangle.fill")
-                                .symbolRenderingMode(.hierarchical)
-                                .foregroundColor(.blue)
-                        }
-                    }
+                    AppearanceOption(selectedAppearance: $selectedAppearance)
+                    ICloudSyncOption(isOn: $settingsManager.settings.isicloudSyncOn)
                 }
                 //MARK: Donate Section
                 Section {
@@ -53,6 +37,7 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .navigationTitle(Text("Settings"))
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 selectedAppearance = settingsManager.getSelectedAppearanceId()
@@ -64,9 +49,58 @@ struct SettingsView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: dismiss.callAsFunction) {
                         Text("Done")
+                            .font(.system(.body, design: .rounded))
                     }
                 }
             }
+        }
+    }
+    
+    
+    private struct AppearanceOption: View {
+        @Binding var selectedAppearance: Int
+        @EnvironmentObject private var settingsManager: SettingsManager
+        
+        var body: some View {
+            Picker(selection: $selectedAppearance) {
+                Group {
+                    Text("Automatic").tag(0)
+                    Text("Light").tag(1)
+                    Text("Dark").tag(2)
+                }
+                .foregroundColor(.projectColors.textColors.textColor)
+            } label: {
+                Label {
+                    Text("Appearance")
+                        .foregroundColor(.projectColors.textColors.textColor)
+                } icon: {
+                    Image(systemName: "rectangle.fill.on.rectangle.fill")
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundColor(.blue)
+                }
+            }
+        }
+    }
+    
+    private struct ICloudSyncOption: View {
+        @Binding var isOn: Bool
+        
+        private var iCloudIconName: String {
+            return isOn ? "icloud" : "icloud.slash"
+        }
+        
+        var body: some View {
+            HStack {
+                Label {
+                    Text("iCloud Sync")
+                        .foregroundColor(.projectColors.textColors.textColor)
+                } icon: {
+                    Image(systemName: iCloudIconName)
+                        .foregroundColor(.cyan)
+                }
+                Toggle("", isOn: $isOn)
+            }
+            .padding(.vertical, 1) // To remove weird flicker on text when changing image icon
         }
     }
 }
@@ -76,10 +110,8 @@ struct SettingsView_Previews: PreviewProvider {
     @StateObject static var settingsManager = SettingsManager()
     
     static var previews: some View {
-        NavigationView {
-            SettingsView()   
-        }
-        .preferredColorScheme(settingsManager.settings.colorScheme)
-        .environmentObject(settingsManager)
+        SettingsView()
+            .preferredColorScheme(settingsManager.settings.colorScheme)
+            .environmentObject(settingsManager)
     }
 }

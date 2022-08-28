@@ -8,7 +8,7 @@
 import CoreData
 import SwiftUI
 
-struct PersistenceController {
+class PersistenceController {
     static let shared = PersistenceController()
 
     static var preview: PersistenceController = {
@@ -42,18 +42,46 @@ struct PersistenceController {
         return result
     }()
 
-    let container: NSPersistentCloudKitContainer
+    private(set) var container: NSPersistentCloudKitContainer!
     var viewContext: NSManagedObjectContext {
         get {
             return container.viewContext
         }
     }
+    
+    private var inMemory: Bool = false
 
     private init(inMemory: Bool = false) {
-        container = NSPersistentCloudKitContainer(name: "CloudKitTodo")
-        if inMemory {
-            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+        self.inMemory = inMemory
+        let settings = KeyValueStore.shared.getSettings()
+        print("iCloud Sync: \(settings.isicloudSyncOn)")
+        container = setupContainer(withSync: settings.isicloudSyncOn, inMemory: inMemory)
+    }
+    
+    ///  Initiates container with iCloud Sync on or off
+    func enableiCloudSync(_ iCloudSync: Bool) {
+        print("iCloud Sync: \(iCloudSync)")
+        container = setupContainer(withSync: iCloudSync, inMemory: inMemory)
+    }
+    
+    private func setupContainer(withSync iCloudSync: Bool, inMemory: Bool) -> NSPersistentCloudKitContainer {
+        let container = NSPersistentCloudKitContainer(name: "CloudKitTodo")
+        
+        guard let description = container.persistentStoreDescriptions.first else {
+            fatalError("[PersistenceController] OH DAM! No persistent store description! ")
         }
+        if inMemory {
+            description.url = URL(fileURLWithPath: "/dev/null")
+        }
+        
+        description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+        description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        
+        
+        if !iCloudSync {
+            description.cloudKitContainerOptions = nil
+        }
+        
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
@@ -71,7 +99,9 @@ struct PersistenceController {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
+        
         container.viewContext.automaticallyMergesChangesFromParent = true
+        return container
     }
     
     func save() {

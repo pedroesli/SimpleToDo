@@ -30,11 +30,12 @@
 		37D7AC832892FF06008FD958 /* Color+ProjectColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7AC822892FF06008FD958 /* Color+ProjectColors.swift */; };
 		37D7AC8628932FCA008FD958 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7AC8528932FCA008FD958 /* Icons.swift */; };
 		37D7ACA228937A21008FD958 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7ACA128937A21008FD958 /* ListCell.swift */; };
+		37EDE3BB28BAE4E80043D618 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 37EDE3BA28BAE4E80043D618 /* Introspect */; };
 		37FB7BA62890C99B00915411 /* CloudKitTodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FB7BA52890C99B00915411 /* CloudKitTodoApp.swift */; };
 		37FB7BA82890C99B00915411 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FB7BA72890C99B00915411 /* ContentView.swift */; };
 		37FB7BAA2890C99E00915411 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37FB7BA92890C99E00915411 /* Assets.xcassets */; };
 		37FB7BAD2890C99E00915411 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37FB7BAC2890C99E00915411 /* Preview Assets.xcassets */; };
-		37FB7BAF2890C99E00915411 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FB7BAE2890C99E00915411 /* Persistence.swift */; };
+		37FB7BAF2890C99E00915411 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FB7BAE2890C99E00915411 /* PersistenceController.swift */; };
 		37FB7BBB2890CCB600915411 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB7BBA2890CCB600915411 /* CloudKit.framework */; };
 		37FB7BC22890D21D00915411 /* CloudKitTodo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 37FB7BC02890D21D00915411 /* CloudKitTodo.xcdatamodeld */; };
 /* End PBXBuildFile section */
@@ -68,7 +69,7 @@
 		37FB7BA72890C99B00915411 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		37FB7BA92890C99E00915411 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		37FB7BAC2890C99E00915411 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		37FB7BAE2890C99E00915411 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		37FB7BAE2890C99E00915411 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		37FB7BB82890CCAD00915411 /* CloudKitTodo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CloudKitTodo.entitlements; sourceTree = "<group>"; };
 		37FB7BBA2890CCB600915411 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		37FB7BBC2890CE6000915411 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37FB7BBB2890CCB600915411 /* CloudKit.framework in Frameworks */,
+				37EDE3BB28BAE4E80043D618 /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,7 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				37D7AC8528932FCA008FD958 /* Icons.swift */,
-				37FB7BAE2890C99E00915411 /* Persistence.swift */,
+				37FB7BAE2890C99E00915411 /* PersistenceController.swift */,
 				37265AD728AD386000C28EEF /* KeyValueStore.swift */,
 			);
 			path = Utils;
@@ -246,6 +248,9 @@
 			dependencies = (
 			);
 			name = CloudKitTodo;
+			packageProductDependencies = (
+				37EDE3BA28BAE4E80043D618 /* Introspect */,
+			);
 			productName = CloudKitTodo;
 			productReference = 37FB7BA22890C99B00915411 /* CloudKitTodo.app */;
 			productType = "com.apple.product-type.application";
@@ -274,6 +279,9 @@
 				Base,
 			);
 			mainGroup = 37FB7B992890C99A00915411;
+			packageReferences = (
+				37EDE3B928BAE4E80043D618 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+			);
 			productRefGroup = 37FB7BA32890C99B00915411 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -301,7 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37346C1828A48D82000EA456 /* NewListTextField.swift in Sources */,
-				37FB7BAF2890C99E00915411 /* Persistence.swift in Sources */,
+				37FB7BAF2890C99E00915411 /* PersistenceController.swift in Sources */,
 				37295FA3289C122D0067F8DA /* IconSelection.swift in Sources */,
 				37295F9E289C11C80067F8DA /* TitleAndIconSection.swift in Sources */,
 				37A12E08289AE316002A8224 /* CDTask+CoreDataProperties.swift in Sources */,
@@ -535,6 +543,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		37EDE3B928BAE4E80043D618 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		37EDE3BA28BAE4E80043D618 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37EDE3B928BAE4E80043D618 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		37FB7BC02890D21D00915411 /* CloudKitTodo.xcdatamodeld */ = {

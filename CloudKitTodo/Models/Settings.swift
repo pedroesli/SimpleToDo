@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
+import Combine
 
 struct Settings: Codable {
-    var colorScheme: ColorScheme?
     
     enum CodingKeys: String, CodingKey {
         case colorScheme
+        case icloudSync
     }
+    
+    var colorScheme: ColorScheme?
+    var isicloudSyncOn: Bool = true
     
     init() {
         
@@ -23,6 +27,7 @@ struct Settings: Codable {
         let interfaceStyleRawValue = try values.decode(Int.self, forKey: .colorScheme)
         
         colorScheme = ColorScheme(UIUserInterfaceStyle(rawValue: interfaceStyleRawValue)!)
+        isicloudSyncOn = try values.decode(Bool.self, forKey: .icloudSync)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -30,5 +35,6 @@ struct Settings: Codable {
         let userInterfaceStyle = UIUserInterfaceStyle(colorScheme)
         
         try container.encode(userInterfaceStyle.rawValue, forKey: .colorScheme)
+        try container.encode(isicloudSyncOn, forKey: .icloudSync)
     }
 }

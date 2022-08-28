@@ -6,21 +6,19 @@
 //
 
 import SwiftUI
+import Introspect
 
 struct ContentView: View {
     
     @StateObject private var viewModel = ContentViewModel()
     @State private var presentNewListSheet = false
     @State private var presentSettingsSheet = false
-    
-    init() {
-        UITableView.appearance().backgroundColor = .clear
-    }
+    @EnvironmentObject private var settingsManager: SettingsManager
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.lists) { list in
+                ForEach(viewModel.lists, id: \.id) { list in
                     ListCell(list: list)
                         .onDrag {
                             return NSItemProvider()
@@ -30,7 +28,9 @@ struct ContentView: View {
                 .onMove(perform: viewModel.moveItem)
                 .id(UUID())
             }
-            .background(Color.projectColors.appBackgroundColor.ignoresSafeArea())
+            .onChange(of: viewModel.lists, perform: { newValue in
+                print("Lists Changed: \(newValue)")
+            })
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -55,9 +55,11 @@ struct ContentView: View {
             }
             .sheet(isPresented: $presentNewListSheet) {
                 NewListView(completionHandler: viewModel.addItem(list:))
+                    .preferredColorScheme(settingsManager.settings.colorScheme)
             }
             .sheet(isPresented: $presentSettingsSheet) {
                 SettingsView()
+                    .preferredColorScheme(settingsManager.settings.colorScheme)
             }
         }
         .onAppear(perform: viewModel.onViewAppear)
@@ -66,8 +68,12 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    
+    @StateObject static var settingsManager = SettingsManager()
+    
     static var previews: some View {
         ContentView()
+            .environmentObject(settingsManager)
             .preferredColorScheme(.dark)
     }
 }

@@ -13,15 +13,16 @@ struct ListCell: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            Image(systemName: list.icon?.name ?? "")
-                .font(.body.bold())
-                .foregroundColor(Color(list.icon?.colorName ?? ""))
-            Text(list.title ?? "")
-                .font(.system(.body, design: .rounded))
-                .foregroundColor(.projectColors.textColors.textColor)
-                .padding(.leading, 16)
+            Label {
+                Text(list.title ?? "")
+                    .font(.system(.body, design: .rounded))
+                    .foregroundColor(.projectColors.textColors.textColor)
+            } icon: {
+                labelIcon(list: list)
+            }
             Spacer()
             Text(String(list.uncompletedTaskCount))
+                .font(.system(.footnote, design: .rounded))
                 .foregroundColor(.projectColors.textColors.taskCountColor)
                 .background {
                     RoundedRectangle(cornerRadius: 9, style: .continuous)
@@ -29,16 +30,37 @@ struct ListCell: View {
                         .foregroundColor(Color("CountBackgroundColor"))
                 }
         }
-        .padding(.vertical, 15)
-        .listRowBackground(Color.clear)
-        .listRowSeparator(.hidden)
+        .padding(.vertical, 10)
+//        .listRowBackground(Color.clear)
+//        .listRowSeparator(.hidden)
+    }
+    
+    @ViewBuilder func labelIcon(list: CDList) -> some View {
+        if let icon = list.icon {
+            Group {
+                if icon.isEmoji {
+                    Text(icon.name ?? "")
+                }
+                else {
+                    Image(systemName: icon.name ?? "")
+                }
+            }
+            .font(.body.bold())
+            .foregroundColor(Color(icon.colorName ?? ""))
+        }
+        else {
+            Image(systemName: "square.fill")
+                .font(.body.bold())
+                .foregroundColor(.gray)
+        }
     }
 }
 
 struct ListCell_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            ListCell(list: PersistenceController.preview.fetchLists().first!)
+            ListCell(list: PersistenceController.preview.fetchLists()[0])
+            ListCell(list: PersistenceController.preview.fetchLists()[1])
         }
     }
 }
