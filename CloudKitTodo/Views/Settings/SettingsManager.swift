@@ -10,12 +10,14 @@ import Combine
 
 class SettingsManager: ObservableObject {
     @Published var settings: Settings = KeyValueStore.shared.getSettings()
-    private var cancellables = Set<AnyCancellable>()
+    private var settingsChangeObserver: NSObjectProtocol?
     
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsKeyValueStoreDidChange), name: KeyValueStore.keyValueStoreDidChangeNotification, object: nil)
-        
-        settings.isicloudSyncOnChanged = icloudSyncChanged(isOn:)
+        createObserver()
+    }
+    
+    deinit {
+        removeObserver()
     }
     
     /**
@@ -38,17 +40,41 @@ class SettingsManager: ObservableObject {
         KeyValueStore.shared.storeSettings(settings)
     }
     
-    private func icloudSyncChanged(isOn: Bool) {
-        print("Updating iCloud Syncd")
+    func icloudSyncChanged(isOn: Bool) {
         PersistenceController.shared.enableiCloudSync(isOn)
         saveSettings()
+    }
+    
+    func settingsSyncChanged(isOn: Bool) {
+        KeyValueStore.shared.isSettingsStoreSyncEnabled = isOn
+        if isOn {
+            createObserver()
+        }
+        else {
+            removeObserver()
+        }
     }
     
     // Updates current settings when the settings from another device is changed
     @objc private func settingsKeyValueStoreDidChange() {
         DispatchQueue.main.async { [weak self] in
+            let newSettings = KeyValueStore.shared.getSettings()
+            self?.settings = newSettings
+            PersistenceController.shared.enableiCloudSync(newSettings.iCloudSyncOn)
             self?.objectWillChange.send()
-            self?.settings = KeyValueStore.shared.getSettings()
         }
+    }
+    
+    private func createObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(settingsKeyValueStoreDidChange),
+            name: KeyValueStore.keyValueStoreDidChangeNotification,
+            object: nil
+        )
+    }
+    
+    private func removeObserver() {
+        NotificationCenter.default.removeObserver(self, name: KeyValueStore.keyValueStoreDidChangeNotification, object: nil)
     }
 }

@@ -12,9 +12,36 @@ class KeyValueStore {
     static let shared = KeyValueStore()
     static let keyValueStoreDidChangeNotification = Notification.Name(rawValue: "valuesChanged-notification")
     
+    var isSettingsStoreSyncEnabled: Bool {
+        get {
+            if !UserDefaults.standard.itemExists(forKey: isSettingsStoreSyncEnabledKey) {
+                UserDefaults.standard.set(true, forKey: isSettingsStoreSyncEnabledKey)
+            }
+            return UserDefaults.standard.bool(forKey: isSettingsStoreSyncEnabledKey)
+        }
+        set{
+            UserDefaults.standard.set(newValue, forKey: isSettingsStoreSyncEnabledKey)
+            
+            if newValue == true {
+                // Update store with user default settings
+                guard let data = UserDefaults.standard.object(forKey: settingsUserDefaultKey) as? Data,
+                      let settings = try? JSONDecoder().decode(Settings.self, from: data) else { return }
+                storeSettings(settings)
+            }
+            else {
+                // Update User Default with Store Settings
+                guard let data = store.data(forKey: settingsStoreKey),
+                      let settings = try? JSONDecoder().decode(Settings.self, from: data) else { return }
+                storeSettings(settings)
+            }
+        }
+    }
+    
     private let store = NSUbiquitousKeyValueStore.default
     private let emojiStoreKey = "KeyRecentEmojies"
     private let settingsStoreKey = "KeySettings"
+    private let settingsUserDefaultKey = "KeySettingsUserDefault"
+    private let isSettingsStoreSyncEnabledKey = "KeyIsSettingsStoreSyncEnabled"
     
     private init() {
         NotificationCenter.default.addObserver(
@@ -43,19 +70,37 @@ class KeyValueStore {
     }
     
     func storeSettings(_ settings: Settings) {
-        do  {
-            let data = try JSONEncoder().encode(settings)
-            store.set(data, forKey: settingsStoreKey)
-            store.synchronize()
+        if isSettingsStoreSyncEnabled {
+            do  {
+                let data = try JSONEncoder().encode(settings)
+                store.set(data, forKey: settingsStoreKey)
+                store.synchronize()
+            }
+            catch {
+                print("[KeyStore] Could not store settings, error: \(error)")
+            }
         }
-        catch {
-            print("[KeyStore] Could not store settings, error: \(error)")
+        else {
+            do {
+                let data = try JSONEncoder().encode(settings)
+                UserDefaults.standard.set(data, forKey: settingsUserDefaultKey)
+            }
+            catch {
+                print("[KeyStore] Could not store settings, error: \(error)")
+            }
         }
     }
     
     func getSettings() -> Settings {
-        if let data = store.data(forKey: settingsStoreKey) {
-            if let settings = try? JSONDecoder().decode(Settings.self, from: data) {
+        if isSettingsStoreSyncEnabled {
+            if let data = store.data(forKey: settingsStoreKey),
+               let settings = try? JSONDecoder().decode(Settings.self, from: data){
+                return settings
+            }
+        }
+        else {
+            if let data = UserDefaults.standard.object(forKey: settingsUserDefaultKey) as? Data,
+               let settings = try? JSONDecoder().decode(Settings.self, from: data){
                 return settings
             }
         }

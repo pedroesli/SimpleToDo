@@ -21,6 +21,7 @@
 		37346C1628A40BE5000EA456 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37346C1528A40BE5000EA456 /* UIFont+Extensions.swift */; };
 		37346C1828A48D82000EA456 /* NewListTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37346C1728A48D82000EA456 /* NewListTextField.swift */; };
 		375A00392894B594001B53D0 /* NewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A00382894B594001B53D0 /* NewListView.swift */; };
+		379DE6FB28BCF89300D4DE21 /* UserDefault+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DE6FA28BCF89300D4DE21 /* UserDefault+Extensions.swift */; };
 		37A12E05289AE316002A8224 /* CDIcon+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A12DFF289AE316002A8224 /* CDIcon+CoreDataClass.swift */; };
 		37A12E06289AE316002A8224 /* CDIcon+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A12E00289AE316002A8224 /* CDIcon+CoreDataProperties.swift */; };
 		37A12E07289AE316002A8224 /* CDTask+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A12E01289AE316002A8224 /* CDTask+CoreDataClass.swift */; };
@@ -55,6 +56,7 @@
 		37346C1528A40BE5000EA456 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		37346C1728A48D82000EA456 /* NewListTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListTextField.swift; sourceTree = "<group>"; };
 		375A00382894B594001B53D0 /* NewListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListView.swift; sourceTree = "<group>"; };
+		379DE6FA28BCF89300D4DE21 /* UserDefault+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+Extensions.swift"; sourceTree = "<group>"; };
 		37A12DFF289AE316002A8224 /* CDIcon+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDIcon+CoreDataClass.swift"; sourceTree = "<group>"; };
 		37A12E00289AE316002A8224 /* CDIcon+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDIcon+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		37A12E01289AE316002A8224 /* CDTask+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTask+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				37D7AC822892FF06008FD958 /* Color+ProjectColors.swift */,
 				37179402289BEF0B005EF0D0 /* String+EmojiCheck.swift */,
 				37346C1528A40BE5000EA456 /* UIFont+Extensions.swift */,
+				379DE6FA28BCF89300D4DE21 /* UserDefault+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				3726461C289AC1DA0043613D /* EmojiPicker.swift in Sources */,
 				37A12E09289AE316002A8224 /* CDList+CoreDataClass.swift in Sources */,
 				37179403289BEF0B005EF0D0 /* String+EmojiCheck.swift in Sources */,
+				379DE6FB28BCF89300D4DE21 /* UserDefault+Extensions.swift in Sources */,
 				37265AD428AC746C00C28EEF /* SettingsManager.swift in Sources */,
 				37A12E0A289AE316002A8224 /* CDList+CoreDataProperties.swift in Sources */,
 				37265AD228AC6B5500C28EEF /* SettingsView.swift in Sources */,

@@ -19,12 +19,16 @@ struct SettingsView: View {
                 //MARK: General Section
                 Section("General") {
                     AppearanceOption(selectedAppearance: $selectedAppearance)
-                    ICloudSyncOption(isOn: $settingsManager.settings.isicloudSyncOn)
+                    SettingsSyncOption()
+                    // Add in a future update.
+                    // Not working properly as intended. 
+                    //ICloudSyncOption(isOn: $settingsManager.settings.isiCloudSyncOn)
                 }
                 //MARK: Donate Section
                 Section {
                     Label {
                         Text("Buy me a cup of Coffee")
+                            .font(.system(.body, design: .rounded))
                             .foregroundColor(.projectColors.textColors.textColor)
                     } icon: {
                         Image(systemName: "cup.and.saucer.fill")
@@ -44,6 +48,9 @@ struct SettingsView: View {
             }
             .onChange(of: selectedAppearance) { newValue in
                 settingsManager.selectAppearance(newValue)
+            }
+            .onChange(of: settingsManager.settings.preferredColorScheme) { _ in
+                selectedAppearance = settingsManager.getSelectedAppearanceId()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -68,10 +75,12 @@ struct SettingsView: View {
                     Text("Light").tag(1)
                     Text("Dark").tag(2)
                 }
+                .font(.system(.body, design: .rounded))
                 .foregroundColor(.projectColors.textColors.textColor)
             } label: {
                 Label {
                     Text("Appearance")
+                        .font(.system(.body, design: .rounded))
                         .foregroundColor(.projectColors.textColors.textColor)
                 } icon: {
                     Image(systemName: "rectangle.fill.on.rectangle.fill")
@@ -84,6 +93,7 @@ struct SettingsView: View {
     
     private struct ICloudSyncOption: View {
         @Binding var isOn: Bool
+        @EnvironmentObject private var settingsManager: SettingsManager
         
         private var iCloudIconName: String {
             return isOn ? "icloud" : "icloud.slash"
@@ -93,6 +103,7 @@ struct SettingsView: View {
             HStack {
                 Label {
                     Text("iCloud Sync")
+                        .font(.system(.body, design: .rounded))
                         .foregroundColor(.projectColors.textColors.textColor)
                 } icon: {
                     Image(systemName: iCloudIconName)
@@ -101,6 +112,32 @@ struct SettingsView: View {
                 Toggle("", isOn: $isOn)
             }
             .padding(.vertical, 1) // To remove weird flicker on text when changing image icon
+            .onChange(of: isOn) { newValue in
+                settingsManager.icloudSyncChanged(isOn: newValue)
+            }
+        }
+    }
+    
+    private struct SettingsSyncOption: View {
+        
+        @State private var isOn = KeyValueStore.shared.isSettingsStoreSyncEnabled
+        @EnvironmentObject private var settingsManager: SettingsManager
+        
+        var body: some View {
+            HStack {
+                Label {
+                    Text("Settings Sync")
+                        .font(.system(.body, design: .rounded))
+                        .foregroundColor(.projectColors.textColors.textColor)
+                } icon: {
+                    Image(systemName: "gearshape.fill")
+                        .foregroundColor(.purple)
+                }
+                Toggle("", isOn: $isOn)
+            }
+            .onChange(of: isOn) { newValue in
+                settingsManager.settingsSyncChanged(isOn: newValue)
+            }
         }
     }
 }
@@ -115,3 +152,6 @@ struct SettingsView_Previews: PreviewProvider {
             .environmentObject(settingsManager)
     }
 }
+
+
+

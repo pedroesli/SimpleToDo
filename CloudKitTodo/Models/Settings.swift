@@ -12,17 +12,11 @@ struct Settings: Codable {
     
     enum CodingKeys: String, CodingKey {
         case preferredColorScheme
-        case icloudSync
+        case iCloudSync
     }
     
     var preferredColorScheme: ColorScheme?
-    var isicloudSyncOn: Bool = true {
-        didSet {
-            isicloudSyncOnChanged?(isicloudSyncOn)
-        }
-    }
-    
-    var isicloudSyncOnChanged: ((Bool) -> Void)?
+    var iCloudSyncOn: Bool = true
     
     init() {
         
@@ -33,7 +27,7 @@ struct Settings: Codable {
         let interfaceStyleRawValue = try values.decode(Int.self, forKey: .preferredColorScheme)
         
         preferredColorScheme = ColorScheme(UIUserInterfaceStyle(rawValue: interfaceStyleRawValue)!)
-        isicloudSyncOn = try values.decode(Bool.self, forKey: .icloudSync)
+        iCloudSyncOn = try values.decode(Bool.self, forKey: .iCloudSync)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -41,6 +35,6 @@ struct Settings: Codable {
         let userInterfaceStyle = UIUserInterfaceStyle(preferredColorScheme)
         
         try container.encode(userInterfaceStyle.rawValue, forKey: .preferredColorScheme)
-        try container.encode(isicloudSyncOn, forKey: .icloudSync)
+        try container.encode(iCloudSyncOn, forKey: .iCloudSync)
     }
 }

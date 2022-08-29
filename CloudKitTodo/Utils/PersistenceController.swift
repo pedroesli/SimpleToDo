@@ -42,30 +42,20 @@ class PersistenceController {
         return result
     }()
 
-    private(set) var container: NSPersistentCloudKitContainer!
+    let container: NSPersistentCloudKitContainer
     var viewContext: NSManagedObjectContext {
         get {
             return container.viewContext
         }
     }
     
-    private var inMemory: Bool = false
+    private var cloudKitContainerOptions: NSPersistentCloudKitContainerOptions?
 
     private init(inMemory: Bool = false) {
-        self.inMemory = inMemory
         let settings = KeyValueStore.shared.getSettings()
-        print("iCloud Sync: \(settings.isicloudSyncOn)")
-        container = setupContainer(withSync: settings.isicloudSyncOn, inMemory: inMemory)
-    }
-    
-    ///  Initiates container with iCloud Sync on or off
-    func enableiCloudSync(_ iCloudSync: Bool) {
-        print("iCloud Sync: \(iCloudSync)")
-        container = setupContainer(withSync: iCloudSync, inMemory: inMemory)
-    }
-    
-    private func setupContainer(withSync iCloudSync: Bool, inMemory: Bool) -> NSPersistentCloudKitContainer {
-        let container = NSPersistentCloudKitContainer(name: "CloudKitTodo")
+        print("iCloud Sync: \(settings.iCloudSyncOn)")
+        
+        container = NSPersistentCloudKitContainer(name: "CloudKitTodo")
         
         guard let description = container.persistentStoreDescriptions.first else {
             fatalError("[PersistenceController] OH DAM! No persistent store description! ")
@@ -77,10 +67,7 @@ class PersistenceController {
         description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
         description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
         
-        
-        if !iCloudSync {
-            description.cloudKitContainerOptions = nil
-        }
+        self.cloudKitContainerOptions = description.cloudKitContainerOptions
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -101,7 +88,17 @@ class PersistenceController {
         })
         
         container.viewContext.automaticallyMergesChangesFromParent = true
-        return container
+    }
+    
+    ///  Initiates container with iCloud Sync on or off
+    func enableiCloudSync(_ iCloudSync: Bool) {
+        guard let description = container.persistentStoreDescriptions.first else { return }
+        if iCloudSync {
+            description.cloudKitContainerOptions = self.cloudKitContainerOptions
+        }
+        else {
+            description.cloudKitContainerOptions = nil
+        }
     }
     
     func save() {
