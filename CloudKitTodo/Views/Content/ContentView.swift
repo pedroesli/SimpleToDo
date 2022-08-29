@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Introspect
 
 struct ContentView: View {
     
@@ -24,8 +23,15 @@ struct ContentView: View {
                         .onDrag {
                             return NSItemProvider()
                         }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            SwipeButton(buttonType: .Delete) {
+                                viewModel.deleteItem(list: list)
+                            }
+                            SwipeButton(buttonType: .Edit) {
+                                
+                            }
+                        }
                 }
-                .onDelete(perform: viewModel.deleteItem)
                 .onMove(perform: viewModel.moveItem)
                 .id(UUID())
             }

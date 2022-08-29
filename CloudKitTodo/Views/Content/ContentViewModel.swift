@@ -22,20 +22,18 @@ class ContentViewModel: ObservableObject {
     
     func addItem(list: CDList) {
         withAnimation {
-            list.order = Int64(lists.count)
+            list.order = (lists.last?.order ?? 0) + 1
             lists.append(list)
             persistenceController.save()
         }
     }
     
-    func deleteItem(offsets: IndexSet) {
+    func deleteItem(list: CDList) {
         withAnimation {
-            offsets
-                .map { lists[$0] }
-                .forEach { list in
-                    persistenceController.viewContext.delete(list)
-                }
-            lists.remove(atOffsets: offsets)
+            if let listIndex = lists.firstIndex(of: list) {
+                lists.remove(at: listIndex)
+            }
+            persistenceController.viewContext.delete(list)
             persistenceController.save()
         }
     }
@@ -61,9 +59,10 @@ class ContentViewModel: ObservableObject {
         }
         
         listSource.order = listDestinationOrder
+        
         persistenceController.save()
         
-        print("source: \(sourceIndex), destination: \(destination)")
+        print("Swaped: \(listSource.title!)(\(listSource.order)) with: \(listDestination.title!)(\(listDestination.order))")
     }
     
     @objc private func contextDidSave(notification: Notification) {
