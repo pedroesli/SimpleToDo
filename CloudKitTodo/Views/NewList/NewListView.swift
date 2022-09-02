@@ -15,7 +15,8 @@ struct NewListView: View {
     @State private var iconColor: ListIconColor = Color.projectColors.listIconColors[0]
     @State private var isEmoji = false
     
-    var completionHandler: (CDList) -> Void
+    var completionHandler: ((CDList) -> Void)?
+    var list: CDList?
     
     var body: some View {
         NavigationView {
@@ -51,13 +52,36 @@ struct NewListView: View {
                     .disabled(title.isEmpty)
                 }
             }
+            .onAppear {
+                configureView()
+            }
         }
     }
     
     func createList() {
-        let newList = CDList(title: title, iconColorName: iconColor.name, iconName: iconName, isEmoji: isEmoji)
-        dismiss()
-        completionHandler(newList)
+        if let list = list {
+            list.title = title
+            list.icon?.name = iconName
+            list.icon?.colorName = iconColor.name
+            list.icon?.isEmoji = isEmoji
+            PersistenceController.shared.save()
+            dismiss()
+        }
+        else {
+            let newList = CDList(title: title, iconColorName: iconColor.name, iconName: iconName, isEmoji: isEmoji)
+            dismiss()
+            completionHandler?(newList)
+        }
+    }
+    
+    /// Configure View for edit mode
+    func configureView() {
+        guard let list = self.list else { return }
+        
+        title = list.title ?? ""
+        iconName = list.icon?.name ?? "circle"
+        iconColor = ListIconColor(name: list.icon?.colorName ?? ListIconColor.colors.first!.name)
+        isEmoji = list.icon?.isEmoji ?? false
     }
 }
 

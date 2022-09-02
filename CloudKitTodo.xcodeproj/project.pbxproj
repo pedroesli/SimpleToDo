@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		370280F528C14B9F00A59EE1 /* ContentSheetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370280F428C14B9F00A59EE1 /* ContentSheetType.swift */; };
 		37179403289BEF0B005EF0D0 /* String+EmojiCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37179402289BEF0B005EF0D0 /* String+EmojiCheck.swift */; };
 		3726461C289AC1DA0043613D /* EmojiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3726461B289AC1DA0043613D /* EmojiPicker.swift */; };
 		37265AD228AC6B5500C28EEF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37265AD128AC6B5500C28EEF /* SettingsView.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		370280F428C14B9F00A59EE1 /* ContentSheetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSheetType.swift; sourceTree = "<group>"; };
 		37179402289BEF0B005EF0D0 /* String+EmojiCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EmojiCheck.swift"; sourceTree = "<group>"; };
 		3726461B289AC1DA0043613D /* EmojiPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPicker.swift; sourceTree = "<group>"; };
 		37265AD128AC6B5500C28EEF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				37295FA6289C1B6A0067F8DA /* SubViews */,
 				37FB7BA72890C99B00915411 /* ContentView.swift */,
 				37295FA7289C1B9F0067F8DA /* ContentViewModel.swift */,
+				370280F428C14B9F00A59EE1 /* ContentSheetType.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				37265AD428AC746C00C28EEF /* SettingsManager.swift in Sources */,
 				37A12E0A289AE316002A8224 /* CDList+CoreDataProperties.swift in Sources */,
 				37265AD228AC6B5500C28EEF /* SettingsView.swift in Sources */,
+				370280F528C14B9F00A59EE1 /* ContentSheetType.swift in Sources */,
 				37D7ACA228937A21008FD958 /* ListCell.swift in Sources */,
 				37295FA1289C120A0067F8DA /* ColorSelectSection.swift in Sources */,
 				37265AD828AD386000C28EEF /* KeyValueStore.swift in Sources */,

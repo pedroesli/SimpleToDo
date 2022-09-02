@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject private var viewModel = ContentViewModel()
+    @State private var contentSheetType: ContentSheetType? = nil
     @State private var presentNewListSheet = false
     @State private var presentSettingsSheet = false
     @EnvironmentObject private var settingsManager: SettingsManager
@@ -28,7 +29,7 @@ struct ContentView: View {
                                 viewModel.deleteItem(list: list)
                             }
                             SwipeButton(buttonType: .Edit) {
-                                
+                                contentSheetType = .newListSheet(list)
                             }
                         }
                 }
@@ -39,14 +40,16 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        presentSettingsSheet = true
+//                        presentSettingsSheet = true
+                        contentSheetType = .settingsSheet
                     } label: {
                         Image(systemName: "gearshape")
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        presentNewListSheet = true
+//                        presentNewListSheet = true
+                        contentSheetType = .newListSheet(nil)
                     } label: {
                         HStack {
                             Image(systemName: "plus.circle.fill")
@@ -57,14 +60,30 @@ struct ContentView: View {
 
                 }
             }
-            .sheet(isPresented: $presentNewListSheet) {
-                NewListView(completionHandler: viewModel.addItem(list:))
-                    .preferredColorScheme(settingsManager.settings.preferredColorScheme ?? systemColorScheme)
-            }
-            .sheet(isPresented: $presentSettingsSheet) {
-                SettingsView()
-                    .preferredColorScheme(settingsManager.settings.preferredColorScheme ?? systemColorScheme)
-            }
+            .sheet(item: $contentSheetType, content: { sheetType in
+                Group {
+                    switch sheetType {
+                    case .newListSheet(let list):
+                        if list == nil {
+                            NewListView(completionHandler: viewModel.addItem(list:))
+                        }
+                        else {
+                            NewListView(completionHandler: viewModel.addItem(list:), list: list)
+                        }
+                    case .settingsSheet:
+                        SettingsView()
+                    }
+                }
+                .preferredColorScheme(settingsManager.settings.preferredColorScheme ?? systemColorScheme)
+            })
+//            .sheet(isPresented: $presentNewListSheet) {
+//                NewListView(completionHandler: viewModel.addItem(list:))
+//                    .preferredColorScheme(settingsManager.settings.preferredColorScheme ?? systemColorScheme)
+//            }
+//            .sheet(isPresented: $presentSettingsSheet) {
+//                SettingsView()
+//                    .preferredColorScheme(settingsManager.settings.preferredColorScheme ?? systemColorScheme)
+//            }
         }
         .onAppear(perform: viewModel.onViewAppear)
     }
