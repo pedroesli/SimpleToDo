@@ -11,8 +11,6 @@ struct ContentView: View {
     
     @StateObject private var viewModel = ContentViewModel()
     @State private var contentSheetType: ContentSheetType? = nil
-    @State private var presentNewListSheet = false
-    @State private var presentSettingsSheet = false
     @EnvironmentObject private var settingsManager: SettingsManager
     @Environment(\.colorScheme) private var systemColorScheme: ColorScheme
     
@@ -40,7 +38,6 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-//                        presentSettingsSheet = true
                         contentSheetType = .settingsSheet
                     } label: {
                         Image(systemName: "gearshape")
@@ -48,7 +45,6 @@ struct ContentView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-//                        presentNewListSheet = true
                         contentSheetType = .newListSheet(nil)
                     } label: {
                         HStack {
@@ -76,14 +72,6 @@ struct ContentView: View {
                 }
                 .preferredColorScheme(settingsManager.settings.preferredColorScheme ?? systemColorScheme)
             })
-//            .sheet(isPresented: $presentNewListSheet) {
-//                NewListView(completionHandler: viewModel.addItem(list:))
-//                    .preferredColorScheme(settingsManager.settings.preferredColorScheme ?? systemColorScheme)
-//            }
-//            .sheet(isPresented: $presentSettingsSheet) {
-//                SettingsView()
-//                    .preferredColorScheme(settingsManager.settings.preferredColorScheme ?? systemColorScheme)
-//            }
         }
         .onAppear(perform: viewModel.onViewAppear)
     }

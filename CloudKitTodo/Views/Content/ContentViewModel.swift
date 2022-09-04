@@ -47,6 +47,7 @@ class ContentViewModel: ObservableObject {
         
         lists.move(fromOffsets: source, toOffset: destination)
         
+        //NOTE: Ordering algorithm needs improvement
         if destination > sourceIndex {
             for listItem in lists.filter({ $0.order <= listDestinationOrder }) {
                 listItem.order -= 1
@@ -62,7 +63,8 @@ class ContentViewModel: ObservableObject {
         
         persistenceController.save()
         
-        print("Swaped: \(listSource.title!)(\(listSource.order)) with: \(listDestination.title!)(\(listDestination.order))")
+        //print("Swaped: \(listSource.title!)(\(listSource.order)) with: \(listDestination.title!)(\(listDestination.order))")
+        //print(lists.first?.order, lists.last?.order)
     }
     
     @objc private func contextDidSave(notification: Notification) {

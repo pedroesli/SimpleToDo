@@ -31,8 +31,7 @@ struct ListCell: View {
                 }
         }
         .padding(.vertical, 10)
-//        .listRowBackground(Color.clear)
-//        .listRowSeparator(.hidden)
+        .listRowSeparator(.hidden)
     }
     
     @ViewBuilder func labelIcon(list: CDList) -> some View {
