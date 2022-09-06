@@ -8,11 +8,45 @@
 import UIKit
 
 extension UIFont {
-    static func boldTitle2() -> UIFont {
-        let size = UIFont.preferredFont(forTextStyle: .title2).pointSize
-        if let descriptor = UIFont.systemFont(ofSize: size, weight: .bold).fontDescriptor.withDesign(.rounded) {
-            return UIFont(descriptor: descriptor, size: size)
-        }
-        return UIFont.systemFont(ofSize: size, weight: .bold)
+    
+    static var roundedTitle2: UIFont {
+        var titleFont = UIFont.preferredFont(forTextStyle: .title2)
+        titleFont = UIFont(
+            descriptor:
+                titleFont.fontDescriptor
+                .withDesign(.rounded)?
+                .withSymbolicTraits(.traitBold)
+                ??
+                titleFont.fontDescriptor,
+            size: 0
+        )
+        return titleFont
+    }
+    
+    static var roundedLargeTitle: UIFont {
+        var titleFont = UIFont.preferredFont(forTextStyle: .largeTitle)
+        titleFont = UIFont(
+            descriptor:
+                titleFont.fontDescriptor
+                .withDesign(.rounded)?
+                .withSymbolicTraits(.traitBold)
+                ??
+                titleFont.fontDescriptor,
+            size: 0
+        )
+        return titleFont
+    }
+    
+    static var roundedTitle: UIFont {
+        var titleFont = UIFont.preferredFont(forTextStyle: .headline)
+        titleFont = UIFont(
+            descriptor:
+                titleFont.fontDescriptor
+                .withDesign(.rounded)
+                ??
+                titleFont.fontDescriptor,
+            size: 0
+        )
+        return titleFont
     }
 }

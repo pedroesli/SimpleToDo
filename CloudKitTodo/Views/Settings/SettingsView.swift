@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Introspect
 
 struct SettingsView: View {
     
@@ -41,7 +42,6 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
-            .navigationTitle(Text("Settings"))
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 selectedAppearance = settingsManager.getSelectedAppearanceId()
@@ -59,6 +59,9 @@ struct SettingsView: View {
                             .font(.system(.body, design: .rounded))
                     }
                 }
+            }
+            .introspectNavigationController { navigationController in
+                navigationController.navigationBar.titleTextAttributes = [.font: UIFont.roundedTitle]
             }
         }
     }

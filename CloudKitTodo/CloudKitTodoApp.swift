@@ -17,6 +17,10 @@ struct CloudKitTodoApp: App {
             ContentView()
                 .preferredColorScheme(settingsManager.settings.preferredColorScheme)
                 .environmentObject(settingsManager)
+                .onAppear {
+                    UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont.roundedLargeTitle]
+                    UINavigationBar.appearance().titleTextAttributes = [.font: UIFont.roundedTitle]
+                }
         }
     }
 }

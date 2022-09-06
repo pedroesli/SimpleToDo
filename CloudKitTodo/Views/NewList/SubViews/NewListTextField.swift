@@ -14,7 +14,7 @@ struct NewListTextField: UIViewRepresentable {
     
     func makeUIView(context: Context) -> UITextField {
         let textField = UITextField()
-        textField.font = UIFont.boldTitle2()
+        textField.font = UIFont.roundedTitle2
         textField.text = text
         textField.placeholder = placeHolder
         textField.clearButtonMode = .whileEditing

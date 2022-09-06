@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Introspect
 
 struct ContentView: View {
     
@@ -13,6 +14,7 @@ struct ContentView: View {
     @State private var contentSheetType: ContentSheetType? = nil
     @EnvironmentObject private var settingsManager: SettingsManager
     @Environment(\.colorScheme) private var systemColorScheme: ColorScheme
+    @StateObject private var navDelegate = NavigationControllerDelegate()
     
     var body: some View {
         NavigationView {
@@ -34,7 +36,6 @@ struct ContentView: View {
                 .onMove(perform: viewModel.moveItem)
                 .id(UUID())
             }
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -72,8 +73,13 @@ struct ContentView: View {
                 }
                 .preferredColorScheme(settingsManager.settings.preferredColorScheme ?? systemColorScheme)
             })
+            .introspectNavigationController { navController in
+                navController.delegate = navDelegate
+            }
+            .environmentObject(navDelegate)
         }
         .onAppear(perform: viewModel.onViewAppear)
+        .navigationViewStyle(.stack)
     }
     
 }

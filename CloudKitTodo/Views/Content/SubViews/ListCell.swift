@@ -10,28 +10,45 @@ import SwiftUI
 struct ListCell: View {
     
     let list: CDList
+    @State private var isActive = false
+    @EnvironmentObject private var navDelegate: NavigationControllerDelegate
     
     var body: some View {
-        HStack(spacing: 0) {
-            Label {
-                Text(list.title ?? "")
-                    .font(.system(.body, design: .rounded))
-                    .foregroundColor(.projectColors.textColors.textColor)
-            } icon: {
-                labelIcon(list: list)
+        ZStack{
+            NavigationLink(isActive: $isActive) {
+                ToDoView(viewModel: ToDoViewModel(list: list))
+                    .environmentObject(navDelegate)
+            } label: {
+                EmptyView()
             }
-            Spacer()
-            Text(String(list.uncompletedTaskCount))
-                .font(.system(.footnote, design: .rounded))
-                .foregroundColor(.projectColors.textColors.taskCountColor)
-                .background {
-                    RoundedRectangle(cornerRadius: 9, style: .continuous)
-                        .padding(EdgeInsets(top: -5, leading: -7, bottom: -5, trailing: -7))
-                        .foregroundColor(Color("CountBackgroundColor"))
+            .hidden()
+            Button {
+                navDelegate.list = list
+                isActive = true
+            } label: {
+                HStack(spacing: 0) {
+                    Label {
+                        Text(list.title ?? "")
+                            .font(.system(.body, design: .rounded))
+                            .foregroundColor(.projectColors.textColors.textColor)
+                    } icon: {
+                        labelIcon(list: list)
+                    }
+                    Spacer()
+                    Text(String(list.uncompletedTaskCount))
+                        .font(.system(.footnote, design: .rounded))
+                        .foregroundColor(.projectColors.textColors.taskCountColor)
+                        .background {
+                            RoundedRectangle(cornerRadius: 9, style: .continuous)
+                                .padding(EdgeInsets(top: -5, leading: -7, bottom: -5, trailing: -7))
+                                .foregroundColor(Color("CountBackgroundColor"))
+                        }
                 }
+                .padding(.trailing, 5)
+            }
+            .padding(.vertical, 10)
+            .listRowSeparator(.hidden)
         }
-        .padding(.vertical, 10)
-        .listRowSeparator(.hidden)
     }
     
     @ViewBuilder func labelIcon(list: CDList) -> some View {

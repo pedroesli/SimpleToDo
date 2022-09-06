@@ -34,6 +34,7 @@
 		37D7AC832892FF06008FD958 /* Color+ProjectColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7AC822892FF06008FD958 /* Color+ProjectColors.swift */; };
 		37D7AC8628932FCA008FD958 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7AC8528932FCA008FD958 /* Icons.swift */; };
 		37D7ACA228937A21008FD958 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7ACA128937A21008FD958 /* ListCell.swift */; };
+		37E366FB28C78C6300FCCEB4 /* NavigationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E366FA28C78C6300FCCEB4 /* NavigationControllerDelegate.swift */; };
 		37EDE3BB28BAE4E80043D618 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 37EDE3BA28BAE4E80043D618 /* Introspect */; };
 		37FB7BA62890C99B00915411 /* CloudKitTodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FB7BA52890C99B00915411 /* CloudKitTodoApp.swift */; };
 		37FB7BA82890C99B00915411 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FB7BA72890C99B00915411 /* ContentView.swift */; };
@@ -72,6 +73,7 @@
 		37D7AC822892FF06008FD958 /* Color+ProjectColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+ProjectColors.swift"; sourceTree = "<group>"; };
 		37D7AC8528932FCA008FD958 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		37D7ACA128937A21008FD958 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		37E366FA28C78C6300FCCEB4 /* NavigationControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerDelegate.swift; sourceTree = "<group>"; };
 		37FB7BA22890C99B00915411 /* CloudKitTodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudKitTodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37FB7BA52890C99B00915411 /* CloudKitTodoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitTodoApp.swift; sourceTree = "<group>"; };
 		37FB7BA72890C99B00915411 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				37FB7BA72890C99B00915411 /* ContentView.swift */,
 				37295FA7289C1B9F0067F8DA /* ContentViewModel.swift */,
 				370280F428C14B9F00A59EE1 /* ContentSheetType.swift */,
+				37E366FA28C78C6300FCCEB4 /* NavigationControllerDelegate.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				37A12E07289AE316002A8224 /* CDTask+CoreDataClass.swift in Sources */,
 				37295FA8289C1B9F0067F8DA /* ContentViewModel.swift in Sources */,
 				375A00392894B594001B53D0 /* NewListView.swift in Sources */,
+				37E366FB28C78C6300FCCEB4 /* NavigationControllerDelegate.swift in Sources */,
 				37265AD628AC836200C28EEF /* Settings.swift in Sources */,
 				37A12E05289AE316002A8224 /* CDIcon+CoreDataClass.swift in Sources */,
 				37D7AC8628932FCA008FD958 /* Icons.swift in Sources */,
