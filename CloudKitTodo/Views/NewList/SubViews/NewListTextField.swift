@@ -19,11 +19,12 @@ struct NewListTextField: UIViewRepresentable {
         textField.placeholder = placeHolder
         textField.clearButtonMode = .whileEditing
         textField.textAlignment = .center
+        textField.returnKeyType = .done
         textField.textColor = UIColor(named: iconColor.name)
         
         //Events
         textField.addTarget(context.coordinator, action: #selector(context.coordinator.textChanged(_:)), for: .editingChanged)
-        textField.addTarget(context.coordinator, action: #selector(context.coordinator.primaryAction(_:)), for: .primaryActionTriggered)
+        textField.addTarget(context.coordinator, action: #selector(context.coordinator.primaryActionTriggered(_:)), for: .primaryActionTriggered)
         
         return textField
     }
@@ -49,7 +50,7 @@ struct NewListTextField: UIViewRepresentable {
             }
         }
         
-        @objc func primaryAction(_ sender: UITextField) {
+        @objc func primaryActionTriggered(_ sender: UITextField) {
             sender.resignFirstResponder()
         }
     }

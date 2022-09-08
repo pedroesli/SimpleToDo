@@ -17,6 +17,7 @@ struct ListCell: View {
         ZStack{
             NavigationLink(isActive: $isActive) {
                 ToDoView(viewModel: ToDoViewModel(list: list))
+                    .navigationTitle(list.title ?? "")
                     .environmentObject(navDelegate)
             } label: {
                 EmptyView()
@@ -47,8 +48,8 @@ struct ListCell: View {
                 .padding(.trailing, 5)
             }
             .padding(.vertical, 10)
-            .listRowSeparator(.hidden)
         }
+        .listRowSeparator(.hidden)
     }
     
     @ViewBuilder func labelIcon(list: CDList) -> some View {

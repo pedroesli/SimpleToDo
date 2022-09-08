@@ -74,12 +74,12 @@ struct ContentView: View {
                 .preferredColorScheme(settingsManager.settings.preferredColorScheme ?? systemColorScheme)
             })
             .introspectNavigationController { navController in
-                navController.delegate = navDelegate
+                //navController.delegate = navDelegate
             }
             .environmentObject(navDelegate)
+            //.navigationBarTitleDisplayMode(.inline)
         }
         .onAppear(perform: viewModel.onViewAppear)
-        .navigationViewStyle(.stack)
     }
     
 }

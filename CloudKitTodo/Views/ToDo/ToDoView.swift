@@ -9,36 +9,85 @@ import SwiftUI
 import Introspect
 
 class ToDoViewModel: ObservableObject {
-    @Published private(set) var list: CDList
+    
+    @Published var list: CDList?
     
     init(list: CDList) {
         self.list = list
     }
+    
+    var title: String {
+        list?.title ?? ""
+    }
+    var viewTint: Color {
+        Color(list?.icon?.colorName ?? "AccentColor")
+    }
+    
+    func onViewApear(list: CDList) {
+        self.list = list
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            print("Dispatch")
+            self.list?.title = "Hello"
+        }
+    }
+    
 }
 
 struct ToDoView: View {
     
-    @StateObject var viewModel: ToDoViewModel
+    @ObservedObject var viewModel: ToDoViewModel
     @EnvironmentObject private var navDelegate: NavigationControllerDelegate
-    private let defaultColorName = "AccentColor"
     
     var body: some View {
         List{
-            Text("DDD")
+            ZStack{
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .foregroundColor(Color(uiColor: .tertiarySystemBackground))
+                HStack {
+                    Label {
+                        Text("Do Something")
+                            .foregroundColor(.projectColors.textColors.textColor)
+                    } icon: {
+                        Button {
+                            print("Press1")
+                        } label: {
+                            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                .frame(width: 25, height: 25)
+                                .foregroundColor(Color(uiColor: .systemGroupedBackground))
+                        }
+                    }
+                }
+            }
+            .buttonStyle(.plain)
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color(uiColor: .systemGroupedBackground))
         }
-        .navigationBarTitleDisplayMode(.large)
-        .navigationTitle(viewModel.list.title ?? "")
+        .listStyle(.grouped)
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     
                 } label: {
-                    Text("HEYE")
+                    Image(systemName: "ellipsis.circle")
                 }
-
+            }
+            ToolbarItem(placement: .bottomBar) {
+                HStack {
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                        Text("New Task")
+                    }
+                    .font(.system(.body, design: .rounded).bold())
+                    Spacer()
+                }
             }
         }
-        .tint(Color(viewModel.list.icon?.colorName ?? defaultColorName))
+        .navigationBarTitleDisplayMode(.large)
+        .navigationTitle(viewModel.list?.title ??  "")
+        .tint(viewModel.viewTint)
     }
     
 }
@@ -50,6 +99,7 @@ struct ToDoView_Previews: PreviewProvider {
             ToDoView(viewModel: ToDoViewModel(list: list))
                 .environmentObject(NavigationControllerDelegate())
         }
+        .preferredColorScheme(.dark)
         .navigationViewStyle(.stack)
         .onAppear {
             UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont.roundedLargeTitle]
