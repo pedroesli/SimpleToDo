@@ -23,6 +23,7 @@
 		37346C1828A48D82000EA456 /* NewListTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37346C1728A48D82000EA456 /* NewListTextField.swift */; };
 		375A00392894B594001B53D0 /* NewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A00382894B594001B53D0 /* NewListView.swift */; };
 		37731BD328C4CAAA000E794E /* ToDoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37731BD228C4CAAA000E794E /* ToDoView.swift */; };
+		3778FBF628CA7A5E0021F606 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 3778FBF528CA7A5E0021F606 /* Introspect */; };
 		379DE6FB28BCF89300D4DE21 /* UserDefault+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DE6FA28BCF89300D4DE21 /* UserDefault+Extensions.swift */; };
 		379DE70328BD06F600D4DE21 /* SwipeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DE70228BD06F600D4DE21 /* SwipeButton.swift */; };
 		37A12E05289AE316002A8224 /* CDIcon+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A12DFF289AE316002A8224 /* CDIcon+CoreDataClass.swift */; };
@@ -35,7 +36,6 @@
 		37D7AC8628932FCA008FD958 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7AC8528932FCA008FD958 /* Icons.swift */; };
 		37D7ACA228937A21008FD958 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D7ACA128937A21008FD958 /* ListCell.swift */; };
 		37E366FB28C78C6300FCCEB4 /* NavigationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E366FA28C78C6300FCCEB4 /* NavigationControllerDelegate.swift */; };
-		37EDE3BB28BAE4E80043D618 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 37EDE3BA28BAE4E80043D618 /* Introspect */; };
 		37FB7BA62890C99B00915411 /* CloudKitTodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FB7BA52890C99B00915411 /* CloudKitTodoApp.swift */; };
 		37FB7BA82890C99B00915411 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FB7BA72890C99B00915411 /* ContentView.swift */; };
 		37FB7BAA2890C99E00915411 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37FB7BA92890C99E00915411 /* Assets.xcassets */; };
@@ -92,7 +92,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37FB7BBB2890CCB600915411 /* CloudKit.framework in Frameworks */,
-				37EDE3BB28BAE4E80043D618 /* Introspect in Frameworks */,
+				3778FBF628CA7A5E0021F606 /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +280,7 @@
 			);
 			name = CloudKitTodo;
 			packageProductDependencies = (
-				37EDE3BA28BAE4E80043D618 /* Introspect */,
+				3778FBF528CA7A5E0021F606 /* Introspect */,
 			);
 			productName = CloudKitTodo;
 			productReference = 37FB7BA22890C99B00915411 /* CloudKitTodo.app */;
@@ -311,7 +311,7 @@
 			);
 			mainGroup = 37FB7B992890C99A00915411;
 			packageReferences = (
-				37EDE3B928BAE4E80043D618 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				3778FBF428CA7A5E0021F606 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = 37FB7BA32890C99B00915411 /* Products */;
 			projectDirPath = "";
@@ -581,7 +581,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		37EDE3B928BAE4E80043D618 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+		3778FBF428CA7A5E0021F606 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect";
 			requirement = {
@@ -592,9 +592,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		37EDE3BA28BAE4E80043D618 /* Introspect */ = {
+		3778FBF528CA7A5E0021F606 /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 37EDE3B928BAE4E80043D618 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			package = 3778FBF428CA7A5E0021F606 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
 		};
 /* End XCSwiftPackageProductDependency section */
