@@ -7,38 +7,6 @@
 
 import SwiftUI
 
-class ToDoViewModel: ObservableObject {
-    
-    @Published var list: CDList
-    
-    init(list: CDList) {
-        self.list = list
-    }
-    
-    var viewTint: Color {
-        Color(list.icon?.colorName ?? "AccentColor")
-    }
-    
-    func onViewApear() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            print("Dispatch")
-            self.setTitle("Hey 2")
-            
-        }
-    }
-    
-    func setTitle(_ title: String) {
-        self.list.title = title
-        PersistenceController.shared.save()
-        self.objectWillChange.send()
-    }
-    
-    func getTitle() -> String {
-        return list.title
-    }
-    
-}
-
 struct ToDoView: View {
     
     @ObservedObject var list: CDList
@@ -56,8 +24,8 @@ struct ToDoView: View {
                         Button {
                             print("Press1")
                         } label: {
-                            RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                .frame(width: 25, height: 25)
+                            RoundedRectangle(cornerRadius: 9, style: .continuous)
+                                .frame(width: 30, height: 30)
                                 .foregroundColor(Color(uiColor: .systemGroupedBackground))
                         }
                     }
@@ -71,6 +39,13 @@ struct ToDoView: View {
         .navigationBarTitleDisplayMode(.large)
         .navigationTitle(list.title)
         .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                }
+            }
             ToolbarItemGroup(placement: .bottomBar) {
                 Button {
                     
@@ -82,13 +57,6 @@ struct ToDoView: View {
                     .font(.system(.body, design: .rounded).bold())
                 }
                 Spacer()
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    
-                } label: {
-                    Image(systemName: "ellipsis.circle")
-                }
             }
         }
     }
