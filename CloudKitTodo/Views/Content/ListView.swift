@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  ListView.swift
 //  CloudKitTodo
 //
 //  Created by Pedro Ésli Vieira do Nascimento on 26/07/22.
@@ -8,12 +8,11 @@
 import SwiftUI
 import Introspect
 
-struct ContentView: View {
+struct ListView: View {
     
-    @StateObject private var viewModel = ContentViewModel()
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \CDList.order, ascending: true)])
     private var lists: FetchedResults<CDList>
-    @State private var contentSheetType: ContentSheetType? = nil
+    @State private var listViewSheetType: ListViewSheetType? = nil
     @EnvironmentObject private var settingsManager: SettingsManager
     @Environment(\.colorScheme) private var systemColorScheme: ColorScheme
     @Environment(\.managedObjectContext) private var viewContext
@@ -31,24 +30,24 @@ struct ContentView: View {
                                 deleteItem(list: list)
                             }
                             SwipeButton(buttonType: .Edit) {
-                                contentSheetType = .newListSheet(list)
+                                listViewSheetType = .newListSheet(list)
                             }
                         }
                 }
-                .onMove(perform: viewModel.moveItem) // TODO: move "moveItem" func to content view
+                .onMove(perform: moveItem)
                 //.id(UUID())
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        contentSheetType = .settingsSheet
+                        listViewSheetType = .settingsSheet
                     } label: {
                         Image(systemName: "gearshape")
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        contentSheetType = .newListSheet(nil)
+                        listViewSheetType = .newListSheet(nil)
                     } label: {
                         HStack {
                             Image(systemName: "plus.circle.fill")
@@ -58,7 +57,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .sheet(item: $contentSheetType, content: { sheetType in
+            .sheet(item: $listViewSheetType, content: { sheetType in
                 Group {
                     switch sheetType {
                     case .newListSheet(let list):
@@ -69,10 +68,9 @@ struct ContentView: View {
                 }
                 .preferredColorScheme(settingsManager.settings.preferredColorScheme ?? systemColorScheme)
             })
-            //.navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.inline)
         }
         .navigationViewStyle(.stack) // Must be explicitly specified for iOS to avoid tool bar bottom item visual bug
-        .onAppear(perform: viewModel.onViewAppear)
     }
     
     func deleteItem(list: CDList) {
@@ -82,6 +80,32 @@ struct ContentView: View {
         }
     }
     
+    func moveItem(from source: IndexSet, to destination: Int) {
+        guard let sourceIndex = source.first else { return }
+        guard sourceIndex != destination else { return }
+        let listSource = lists[sourceIndex]
+        let listDestination = lists[destination > sourceIndex ? destination-1 : destination]
+        let listDestinationOrder = listDestination.order
+        
+        //NOTE: Ordering algorithm needs improvement
+        if destination > sourceIndex {
+            for listItem in lists.filter({ $0.order <= listDestinationOrder }) {
+                listItem.order -= 1
+            }
+        }
+        else {
+            for listItem in lists.filter({ $0.order >= listDestinationOrder }) {
+                listItem.order += 1
+            }
+        }
+        
+        listSource.order = listDestinationOrder
+        PersistenceController.shared.save()
+        
+        //print("Swaped: \(listSource.title!)(\(listSource.order)) with: \(listDestination.title!)(\(listDestination.order))")
+        //print(lists.first?.order, lists.last?.order)
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -89,7 +113,7 @@ struct ContentView_Previews: PreviewProvider {
     @StateObject static var settingsManager = SettingsManager()
     
     static var previews: some View {
-        ContentView()
+        ListView()
             .environmentObject(settingsManager)
             .environment(\.managedObjectContext, PersistenceController.preview.viewContext)
             .preferredColorScheme(.dark)

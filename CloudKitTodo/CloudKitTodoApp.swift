@@ -14,7 +14,7 @@ struct CloudKitTodoApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ListView()
                 .preferredColorScheme(settingsManager.settings.preferredColorScheme)
                 .environmentObject(settingsManager)
                 .environment(\.managedObjectContext, PersistenceController.shared.viewContext)

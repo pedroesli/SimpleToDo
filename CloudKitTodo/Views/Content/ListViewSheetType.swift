@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum ContentSheetType: Identifiable, Equatable {
+enum ListViewSheetType: Identifiable, Equatable {
     case newListSheet(CDList?)
     case settingsSheet
     
