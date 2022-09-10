@@ -74,7 +74,7 @@ class ContentViewModel: ObservableObject {
             let lists = updatedObjects.compactMap { $0 as? CDList }
             if !lists.isEmpty {
                 DispatchQueue.main.async { [weak self] in
-                    self?.objectWillChange.send()
+                    //self?.objectWillChange.send()
                 }
             }
         }

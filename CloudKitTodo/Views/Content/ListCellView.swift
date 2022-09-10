@@ -7,29 +7,27 @@
 
 import SwiftUI
 
-struct ListCell: View {
+struct ListCellView: View {
     
     let list: CDList
     @State private var isActive = false
-    @EnvironmentObject private var navDelegate: NavigationControllerDelegate
     
     var body: some View {
         ZStack{
             NavigationLink(isActive: $isActive) {
-                ToDoView(viewModel: ToDoViewModel(list: list))
-                    .navigationTitle(list.title ?? "")
-                    .environmentObject(navDelegate)
+                if isActive {
+                    ToDoView(list: list)
+                }
             } label: {
                 EmptyView()
             }
             .hidden()
             Button {
-                navDelegate.list = list
                 isActive = true
             } label: {
                 HStack(spacing: 0) {
                     Label {
-                        Text(list.title ?? "")
+                        Text(list.title)
                             .font(.system(.body, design: .rounded))
                             .foregroundColor(.projectColors.textColors.textColor)
                     } icon: {
@@ -76,8 +74,8 @@ struct ListCell: View {
 struct ListCell_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            ListCell(list: PersistenceController.preview.fetchLists()[0])
-            ListCell(list: PersistenceController.preview.fetchLists()[1])
+            ListCellView(list: PersistenceController.preview.fetchLists()[0])
+            ListCellView(list: PersistenceController.preview.fetchLists()[1])
         }
     }
 }

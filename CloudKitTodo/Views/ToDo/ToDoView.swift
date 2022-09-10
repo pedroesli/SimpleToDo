@@ -6,38 +6,42 @@
 //
 
 import SwiftUI
-import Introspect
 
 class ToDoViewModel: ObservableObject {
     
-    @Published var list: CDList?
+    @Published var list: CDList
     
     init(list: CDList) {
         self.list = list
     }
     
-    var title: String {
-        list?.title ?? ""
-    }
     var viewTint: Color {
-        Color(list?.icon?.colorName ?? "AccentColor")
+        Color(list.icon?.colorName ?? "AccentColor")
     }
     
-    func onViewApear(list: CDList) {
-        self.list = list
-        
+    func onViewApear() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             print("Dispatch")
-            self.list?.title = "Hello"
+            self.setTitle("Hey 2")
+            
         }
+    }
+    
+    func setTitle(_ title: String) {
+        self.list.title = title
+        PersistenceController.shared.save()
+        self.objectWillChange.send()
+    }
+    
+    func getTitle() -> String {
+        return list.title
     }
     
 }
 
 struct ToDoView: View {
     
-    @ObservedObject var viewModel: ToDoViewModel
-    @EnvironmentObject private var navDelegate: NavigationControllerDelegate
+    @ObservedObject var list: CDList
     
     var body: some View {
         List{
@@ -46,7 +50,7 @@ struct ToDoView: View {
                     .foregroundColor(Color(uiColor: .tertiarySystemBackground))
                 HStack {
                     Label {
-                        Text("Do Something")
+                        Text(list.title)
                             .foregroundColor(.projectColors.textColors.textColor)
                     } icon: {
                         Button {
@@ -64,7 +68,21 @@ struct ToDoView: View {
             .listRowBackground(Color(uiColor: .systemGroupedBackground))
         }
         .listStyle(.grouped)
+        .navigationBarTitleDisplayMode(.large)
+        .navigationTitle(list.title)
         .toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
+                Button {
+                    
+                } label: {
+                    HStack {
+                        Image(systemName: "plus.circle.fill")
+                        Text("New Task")
+                    }
+                    .font(.system(.body, design: .rounded).bold())
+                }
+                Spacer()
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     
@@ -72,22 +90,7 @@ struct ToDoView: View {
                     Image(systemName: "ellipsis.circle")
                 }
             }
-            ToolbarItem(placement: .bottomBar) {
-                HStack {
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                        Text("New Task")
-                    }
-                    .font(.system(.body, design: .rounded).bold())
-                    Spacer()
-                }
-            }
         }
-        .navigationBarTitleDisplayMode(.large)
-        .navigationTitle(viewModel.list?.title ??  "")
-        .tint(viewModel.viewTint)
     }
     
 }
@@ -96,8 +99,7 @@ struct ToDoView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             let list = PersistenceController.preview.fetchLists().first!
-            ToDoView(viewModel: ToDoViewModel(list: list))
-                .environmentObject(NavigationControllerDelegate())
+            ToDoView(list: list)
         }
         .preferredColorScheme(.dark)
         .navigationViewStyle(.stack)

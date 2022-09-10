@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
 
 extension CDList {
@@ -18,7 +19,7 @@ extension CDList {
 
     @NSManaged public var id: UUID?
     @NSManaged public var order: Int64
-    @NSManaged public var title: String?
+    @NSManaged public var title: String
     @NSManaged public var uncompletedTaskCount: Int64
     @NSManaged public var tasks: NSSet?
     @NSManaged public var icon: CDIcon?

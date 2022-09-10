@@ -14,7 +14,7 @@ class NavigationControllerDelegate: NSObject, UINavigationControllerDelegate, Ob
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         currentViewController = viewController
-        //configureView()
+        configureView()
     }
     
     private func configureView() {

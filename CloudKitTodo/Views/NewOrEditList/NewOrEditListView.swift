@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NewListView: View {
+struct NewOrEditListView: View {
     
     @Environment(\.dismiss) private var dismiss
     @State private var title = ""
@@ -15,7 +15,6 @@ struct NewListView: View {
     @State private var iconColor: ListIconColor = Color.projectColors.listIconColors[0]
     @State private var isEmoji = false
     
-    var completionHandler: ((CDList) -> Void)?
     var list: CDList?
     
     var body: some View {
@@ -39,15 +38,16 @@ struct NewListView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("New List")
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .cancellationAction) {
                     Button(action: dismiss.callAsFunction) {
                         Text("Cancel")
+                            .font(.system(.body, design: .rounded))
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .confirmationAction) {
                     Button(action: createList) {
                         Text("OK")
-                            .font(.body.bold())
+                            .font(.system(.body, design: .rounded).bold())
                     }
                     .disabled(title.isEmpty)
                 }
@@ -68,9 +68,18 @@ struct NewListView: View {
             dismiss()
         }
         else {
-            let newList = CDList(title: title, iconColorName: iconColor.name, iconName: iconName, isEmoji: isEmoji)
+            let list = CDList(context: PersistenceController.shared.viewContext)
+            list.id = UUID()
+            list.title = title
+            
+            let icon = CDIcon(context: PersistenceController.shared.viewContext)
+            icon.colorName = iconColor.name
+            icon.name = iconName
+            icon.isEmoji = isEmoji
+            
+            list.icon = icon
+            PersistenceController.shared.save()
             dismiss()
-            completionHandler?(newList)
         }
     }
     
@@ -78,7 +87,7 @@ struct NewListView: View {
     func configureView() {
         guard let list = self.list else { return }
         
-        title = list.title ?? ""
+        title = list.title
         iconName = list.icon?.name ?? "circle"
         iconColor = ListIconColor(name: list.icon?.colorName ?? ListIconColor.colors.first!.name)
         isEmoji = list.icon?.isEmoji ?? false
@@ -87,9 +96,7 @@ struct NewListView: View {
 
 struct NewListView_Previews: PreviewProvider {
     static var previews: some View {
-        NewListView(completionHandler: { list in
-            
-        })
+        NewOrEditListView()
     }
 }
 
