@@ -16,8 +16,8 @@ extension CDIcon {
         return NSFetchRequest<CDIcon>(entityName: "CDIcon")
     }
 
-    @NSManaged public var colorName: String?
-    @NSManaged public var name: String?
+    @NSManaged public var colorName: String
+    @NSManaged public var name: String
     @NSManaged public var isEmoji: Bool
     @NSManaged public var list: CDList?
 
