@@ -22,7 +22,6 @@
 		37346C1828A48D82000EA456 /* NewListTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37346C1728A48D82000EA456 /* NewListTextField.swift */; };
 		3754B4C028CE475800379F8A /* CheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3754B4BF28CE475800379F8A /* CheckButton.swift */; };
 		3754B4C328CEA81200379F8A /* ToDoTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3754B4C228CEA81200379F8A /* ToDoTextField.swift */; };
-		3754B4C528CEA84F00379F8A /* ToDoTextFieldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3754B4C428CEA84F00379F8A /* ToDoTextFieldManager.swift */; };
 		375A00392894B594001B53D0 /* NewOrEditListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A00382894B594001B53D0 /* NewOrEditListView.swift */; };
 		37731BD328C4CAAA000E794E /* ToDoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37731BD228C4CAAA000E794E /* ToDoView.swift */; };
 		3778FBF628CA7A5E0021F606 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 3778FBF528CA7A5E0021F606 /* Introspect */; };
@@ -62,7 +61,6 @@
 		37346C1728A48D82000EA456 /* NewListTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListTextField.swift; sourceTree = "<group>"; };
 		3754B4BF28CE475800379F8A /* CheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckButton.swift; sourceTree = "<group>"; };
 		3754B4C228CEA81200379F8A /* ToDoTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTextField.swift; sourceTree = "<group>"; };
-		3754B4C428CEA84F00379F8A /* ToDoTextFieldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTextFieldManager.swift; sourceTree = "<group>"; };
 		375A00382894B594001B53D0 /* NewOrEditListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOrEditListView.swift; sourceTree = "<group>"; };
 		37731BD228C4CAAA000E794E /* ToDoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoView.swift; sourceTree = "<group>"; };
 		379DE6FA28BCF89300D4DE21 /* UserDefault+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+Extensions.swift"; sourceTree = "<group>"; };
@@ -152,19 +150,10 @@
 		3754B4BE28CE389700379F8A /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				3754B4C128CEA7FF00379F8A /* ToDoTextField */,
+				3754B4C228CEA81200379F8A /* ToDoTextField.swift */,
 				3754B4BF28CE475800379F8A /* CheckButton.swift */,
 			);
 			path = SubViews;
-			sourceTree = "<group>";
-		};
-		3754B4C128CEA7FF00379F8A /* ToDoTextField */ = {
-			isa = PBXGroup;
-			children = (
-				3754B4C228CEA81200379F8A /* ToDoTextField.swift */,
-				3754B4C428CEA84F00379F8A /* ToDoTextFieldManager.swift */,
-			);
-			path = ToDoTextField;
 			sourceTree = "<group>";
 		};
 		375A00372894B586001B53D0 /* NewOrEditList */ = {
@@ -352,7 +341,6 @@
 			files = (
 				37346C1828A48D82000EA456 /* NewListTextField.swift in Sources */,
 				379DE70328BD06F600D4DE21 /* SwipeButton.swift in Sources */,
-				3754B4C528CEA84F00379F8A /* ToDoTextFieldManager.swift in Sources */,
 				37FB7BAF2890C99E00915411 /* PersistenceController.swift in Sources */,
 				37295FA3289C122D0067F8DA /* IconSelection.swift in Sources */,
 				37731BD328C4CAAA000E794E /* ToDoView.swift in Sources */,

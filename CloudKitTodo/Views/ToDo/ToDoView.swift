@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Introspect
 
 struct ToDoView: View {
     
@@ -66,7 +65,6 @@ struct ToDoView_Previews: PreviewProvider {
             let list = PersistenceController.preview.fetchLists().first!
             ToDoView(list: list)
         }
-        .preferredColorScheme(.dark)
         .navigationViewStyle(.stack)
         .onAppear {
             UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont.roundedLargeTitle]
@@ -88,13 +86,10 @@ struct ToDoCellView: View {
         ZStack{
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .foregroundColor(Color(uiColor: .tertiarySystemBackground))
-            HStack(alignment: .top) {
+            HStack(alignment: .top, spacing: 10) {
                 CheckButton(isChecked: $task.isCompleted, checkColor: listTintColor) {
                     
                 }
-                .padding(.vertical)
-                .padding(.leading)
-                .padding(.trailing, 5)
                 ToDoTextField(text: $task.text, isStrikethrough: $task.isCompleted, onEditingChanged: { isEditing in
                     showInfoButton = isEditing
                 })
@@ -105,11 +100,11 @@ struct ToDoCellView: View {
                         Image(systemName: "info.circle")
                             .font(.title2)
                             .foregroundColor(listTintColor)
-                            .padding(.top, 20)
-                            .padding(.trailing, 15)
+                            .padding(.leading, 5)
                     }
                 }
             }
+            .padding()
         }
         .buttonStyle(.plain)
         .listRowSeparator(.hidden)
