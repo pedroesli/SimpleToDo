@@ -7,70 +7,37 @@
 
 import SwiftUI
 
-class ToDoViewModel: ObservableObject {
-    
-    @Published var list: CDList
-    
-    init(list: CDList) {
-        self.list = list
-    }
-    
-    var viewTint: Color {
-        Color(list.icon?.colorName ?? "AccentColor")
-    }
-    
-    func onViewApear() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            print("Dispatch")
-            self.setTitle("Hey 2")
-            
-        }
-    }
-    
-    func setTitle(_ title: String) {
-        self.list.title = title
-        PersistenceController.shared.save()
-        self.objectWillChange.send()
-    }
-    
-    func getTitle() -> String {
-        return list.title
-    }
-    
-}
-
 struct ToDoView: View {
     
     @ObservedObject var list: CDList
+    @State private var tasks: [CDTask] = []
+    
+    var listTintColor: Color {
+        Color(list.icon?.colorName ?? "AccentColor")
+    }
     
     var body: some View {
         List{
-            ZStack{
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .foregroundColor(Color(uiColor: .tertiarySystemBackground))
-                HStack {
-                    Label {
-                        Text(list.title)
-                            .foregroundColor(.projectColors.textColors.textColor)
-                    } icon: {
-                        Button {
-                            print("Press1")
-                        } label: {
-                            RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                .frame(width: 25, height: 25)
-                                .foregroundColor(Color(uiColor: .systemGroupedBackground))
+            ForEach(tasks, id: \.id ) { task in
+                ToDoCellView(task: task)
+                    .swipeActions {
+                        SwipeButton(buttonType: .Delete) {
+                            
                         }
                     }
-                }
             }
-            .buttonStyle(.plain)
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color(uiColor: .systemGroupedBackground))
         }
         .listStyle(.grouped)
         .navigationBarTitleDisplayMode(.large)
         .navigationTitle(list.title)
         .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                }
+            }
             ToolbarItemGroup(placement: .bottomBar) {
                 Button {
                     
@@ -81,15 +48,12 @@ struct ToDoView: View {
                     }
                     .font(.system(.body, design: .rounded).bold())
                 }
+                .tint(listTintColor)
                 Spacer()
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    
-                } label: {
-                    Image(systemName: "ellipsis.circle")
-                }
-            }
+        }
+        .onAppear {
+            tasks = list.tasks?.allObjects as? [CDTask] ?? []
         }
     }
     
@@ -101,11 +65,49 @@ struct ToDoView_Previews: PreviewProvider {
             let list = PersistenceController.preview.fetchLists().first!
             ToDoView(list: list)
         }
-        .preferredColorScheme(.dark)
         .navigationViewStyle(.stack)
         .onAppear {
             UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont.roundedLargeTitle]
             UINavigationBar.appearance().titleTextAttributes = [.font: UIFont.roundedTitle]
         }
+    }
+}
+
+struct ToDoCellView: View {
+    
+    @ObservedObject var task: CDTask
+    @State private var showInfoButton = false
+    
+    var listTintColor: Color {
+        Color(task.list?.icon?.colorName ?? "AccentColor")
+    }
+    
+    var body: some View {
+        ZStack{
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .foregroundColor(Color(uiColor: .tertiarySystemBackground))
+            HStack(alignment: .top, spacing: 10) {
+                CheckButton(isChecked: $task.isCompleted, checkColor: listTintColor) {
+                    
+                }
+                ToDoTextField(text: $task.text, isStrikethrough: $task.isCompleted, onEditingChanged: { isEditing in
+                    showInfoButton = isEditing
+                })
+                Button {
+                    
+                } label: {
+                    if showInfoButton {
+                        Image(systemName: "info.circle")
+                            .font(.title2)
+                            .foregroundColor(listTintColor)
+                            .padding(.leading, 5)
+                    }
+                }
+            }
+            .padding()
+        }
+        .buttonStyle(.plain)
+        .listRowSeparator(.hidden)
+        .listRowBackground(Color.clear)
     }
 }

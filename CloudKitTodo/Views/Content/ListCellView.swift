@@ -54,14 +54,14 @@ struct ListCellView: View {
         if let icon = list.icon {
             Group {
                 if icon.isEmoji {
-                    Text(icon.name ?? "")
+                    Text(icon.name)
                 }
                 else {
-                    Image(systemName: icon.name ?? "")
+                    Image(systemName: icon.name)
                 }
             }
             .font(.body.bold())
-            .foregroundColor(Color(icon.colorName ?? ""))
+            .foregroundColor(Color(icon.colorName))
         }
         else {
             Image(systemName: "square.fill")

@@ -49,4 +49,17 @@ extension UIFont {
         )
         return titleFont
     }
+    
+    static func roundedFont(forTextStyle style: UIFont.TextStyle) -> UIFont {
+        var titleFont = UIFont.preferredFont(forTextStyle: style)
+        titleFont = UIFont(
+            descriptor:
+                titleFont.fontDescriptor
+                .withDesign(.rounded)
+                ??
+                titleFont.fontDescriptor,
+            size: 0
+        )
+        return titleFont
+    }
 }

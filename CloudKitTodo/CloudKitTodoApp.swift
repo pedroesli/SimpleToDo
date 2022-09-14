@@ -21,6 +21,7 @@ struct CloudKitTodoApp: App {
                 .onAppear {
                     UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont.roundedLargeTitle]
                     UINavigationBar.appearance().titleTextAttributes = [.font: UIFont.roundedTitle]
+                    UITextView.appearance().isScrollEnabled = false
                 }
         }
     }
