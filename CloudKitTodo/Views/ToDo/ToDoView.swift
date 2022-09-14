@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Introspect
 
 struct ToDoView: View {
     
@@ -18,7 +19,6 @@ struct ToDoView: View {
     
     var body: some View {
         List{
-            //ToDoViewCell(task: list.tasks?.allObjects.first as! CDTask)
             ForEach(tasks, id: \.id ) { task in
                 ToDoCellView(task: task)
                     .swipeActions {
@@ -78,6 +78,8 @@ struct ToDoView_Previews: PreviewProvider {
 struct ToDoCellView: View {
     
     @ObservedObject var task: CDTask
+    @State private var showInfoButton = false
+    
     var listTintColor: Color {
         Color(task.list?.icon?.colorName ?? "AccentColor")
     }
@@ -86,34 +88,27 @@ struct ToDoCellView: View {
         ZStack{
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .foregroundColor(Color(uiColor: .tertiarySystemBackground))
-            HStack {
-                Label {
-                    TextField("", text: $task.text)
-                        .font(.system(.body, design: .rounded))
-                        .foregroundColor(.projectColors.textColors.textColor)
-                        .padding(EdgeInsets(top: 20, leading: 4, bottom: 20, trailing: 0))
-                        .onTapGesture {
-                            print("Tapped on textfield")
-                        }
-                } icon: {
-                    Button {
-                        print("Press1")
-                    } label: {
-                        RoundedRectangle(cornerRadius: 9, style: .continuous)
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(Color(uiColor: .systemGroupedBackground))
-                    }
+            HStack(alignment: .top) {
+                CheckButton(isChecked: $task.isCompleted, checkColor: listTintColor) {
+                    
                 }
-                .padding(.leading, 15)
+                .padding(.vertical)
+                .padding(.leading)
+                .padding(.trailing, 5)
+                ToDoTextField(text: $task.text, isStrikethrough: $task.isCompleted, onEditingChanged: { isEditing in
+                    showInfoButton = isEditing
+                })
                 Button {
                     
                 } label: {
-                    Image(systemName: "info.circle")
-                        .font(.title2)
-                        .foregroundColor(listTintColor)
-                        .frame(maxHeight: .infinity)
+                    if showInfoButton {
+                        Image(systemName: "info.circle")
+                            .font(.title2)
+                            .foregroundColor(listTintColor)
+                            .padding(.top, 20)
+                            .padding(.trailing, 15)
+                    }
                 }
-                .padding(.trailing, 15)
             }
         }
         .buttonStyle(.plain)

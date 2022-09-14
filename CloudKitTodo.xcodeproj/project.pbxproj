@@ -20,6 +20,9 @@
 		37295FA5289C12550067F8DA /* EmojiSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37295FA4289C12550067F8DA /* EmojiSelection.swift */; };
 		37346C1628A40BE5000EA456 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37346C1528A40BE5000EA456 /* UIFont+Extensions.swift */; };
 		37346C1828A48D82000EA456 /* NewListTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37346C1728A48D82000EA456 /* NewListTextField.swift */; };
+		3754B4C028CE475800379F8A /* CheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3754B4BF28CE475800379F8A /* CheckButton.swift */; };
+		3754B4C328CEA81200379F8A /* ToDoTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3754B4C228CEA81200379F8A /* ToDoTextField.swift */; };
+		3754B4C528CEA84F00379F8A /* ToDoTextFieldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3754B4C428CEA84F00379F8A /* ToDoTextFieldManager.swift */; };
 		375A00392894B594001B53D0 /* NewOrEditListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A00382894B594001B53D0 /* NewOrEditListView.swift */; };
 		37731BD328C4CAAA000E794E /* ToDoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37731BD228C4CAAA000E794E /* ToDoView.swift */; };
 		3778FBF628CA7A5E0021F606 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 3778FBF528CA7A5E0021F606 /* Introspect */; };
@@ -57,6 +60,9 @@
 		37295FA4289C12550067F8DA /* EmojiSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiSelection.swift; sourceTree = "<group>"; };
 		37346C1528A40BE5000EA456 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		37346C1728A48D82000EA456 /* NewListTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListTextField.swift; sourceTree = "<group>"; };
+		3754B4BF28CE475800379F8A /* CheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckButton.swift; sourceTree = "<group>"; };
+		3754B4C228CEA81200379F8A /* ToDoTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTextField.swift; sourceTree = "<group>"; };
+		3754B4C428CEA84F00379F8A /* ToDoTextFieldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTextFieldManager.swift; sourceTree = "<group>"; };
 		375A00382894B594001B53D0 /* NewOrEditListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOrEditListView.swift; sourceTree = "<group>"; };
 		37731BD228C4CAAA000E794E /* ToDoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoView.swift; sourceTree = "<group>"; };
 		379DE6FA28BCF89300D4DE21 /* UserDefault+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+Extensions.swift"; sourceTree = "<group>"; };
@@ -143,6 +149,24 @@
 			path = SubViews;
 			sourceTree = "<group>";
 		};
+		3754B4BE28CE389700379F8A /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				3754B4C128CEA7FF00379F8A /* ToDoTextField */,
+				3754B4BF28CE475800379F8A /* CheckButton.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
+		3754B4C128CEA7FF00379F8A /* ToDoTextField */ = {
+			isa = PBXGroup;
+			children = (
+				3754B4C228CEA81200379F8A /* ToDoTextField.swift */,
+				3754B4C428CEA84F00379F8A /* ToDoTextFieldManager.swift */,
+			);
+			path = ToDoTextField;
+			sourceTree = "<group>";
+		};
 		375A00372894B586001B53D0 /* NewOrEditList */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +179,7 @@
 		37731BD128C4CA26000E794E /* ToDo */ = {
 			isa = PBXGroup;
 			children = (
+				3754B4BE28CE389700379F8A /* SubViews */,
 				37731BD228C4CAAA000E794E /* ToDoView.swift */,
 			);
 			path = ToDo;
@@ -327,6 +352,7 @@
 			files = (
 				37346C1828A48D82000EA456 /* NewListTextField.swift in Sources */,
 				379DE70328BD06F600D4DE21 /* SwipeButton.swift in Sources */,
+				3754B4C528CEA84F00379F8A /* ToDoTextFieldManager.swift in Sources */,
 				37FB7BAF2890C99E00915411 /* PersistenceController.swift in Sources */,
 				37295FA3289C122D0067F8DA /* IconSelection.swift in Sources */,
 				37731BD328C4CAAA000E794E /* ToDoView.swift in Sources */,
@@ -338,6 +364,7 @@
 				37FB7BC22890D21D00915411 /* CloudKitTodo.xcdatamodeld in Sources */,
 				37D7AC832892FF06008FD958 /* Color+ProjectColors.swift in Sources */,
 				37346C1628A40BE5000EA456 /* UIFont+Extensions.swift in Sources */,
+				3754B4C328CEA81200379F8A /* ToDoTextField.swift in Sources */,
 				3726461C289AC1DA0043613D /* EmojiPicker.swift in Sources */,
 				37A12E09289AE316002A8224 /* CDList+CoreDataClass.swift in Sources */,
 				37179403289BEF0B005EF0D0 /* String+EmojiCheck.swift in Sources */,
@@ -351,6 +378,7 @@
 				37265AD828AD386000C28EEF /* KeyValueStore.swift in Sources */,
 				37FB7BA62890C99B00915411 /* CloudKitTodoApp.swift in Sources */,
 				37A12E07289AE316002A8224 /* CDTask+CoreDataClass.swift in Sources */,
+				3754B4C028CE475800379F8A /* CheckButton.swift in Sources */,
 				375A00392894B594001B53D0 /* NewOrEditListView.swift in Sources */,
 				37265AD628AC836200C28EEF /* Settings.swift in Sources */,
 				37A12E05289AE316002A8224 /* CDIcon+CoreDataClass.swift in Sources */,

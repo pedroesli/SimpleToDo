@@ -21,6 +21,7 @@ struct NewListTextField: UIViewRepresentable {
         textField.textAlignment = .center
         textField.returnKeyType = .done
         textField.textColor = UIColor(named: iconColor.name)
+        textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
         //Events
         textField.addTarget(context.coordinator, action: #selector(context.coordinator.textChanged(_:)), for: .editingChanged)
